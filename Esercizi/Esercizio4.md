@@ -12,7 +12,7 @@ Realizza un breve programma Python che rispetti **solo** i seguenti vincoli:
 
 3. Durante lo scorrimento, dividi i valori in **due nuove liste**:
 
-    - `vocali` → contiene i nomi che iniziano con una vocale (a, e, i, o, u, maiuscole o minuscole)
+    - `vocali` → contiene i nomi che iniziano con una vocale (a, e, i, o, u, maiuscole o minuscole) (comando per inizia è .startswith("valore con cui deve iniziare") esempio nome.startswith )
     - `consonanti` → contiene tutti gli altri nomi
 
 4. Al termine del ciclo stampa le due liste con un output simile a:
