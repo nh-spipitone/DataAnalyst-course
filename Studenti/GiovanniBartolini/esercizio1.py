@@ -34,20 +34,21 @@ print(f"Employees dictionary: {employees}")
 
 team_size = len(employees)
 age_sum = 0
-over30 = 0
+over30 = []
 for name, age in employees.items():
     if age >= 30:
-        #a)
-        print(name)
-        over30 += 1
+        over30.append(name)
     age_sum += age
+
+# a)
+print(f"Employees with age >= 30: {over30}")
 
 #b)
 age_average = age_sum / team_size
 print(f"The age average of the team is {age_average}")
 
 #c)
-senior_team = over30 > (team_size/2)
+senior_team = len(over30) > (team_size/2)
 if senior_team:
     print("Team Senior")
 else:
