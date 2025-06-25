@@ -21,4 +21,35 @@ print(f"Even number list: {even_numbers}")
 print(f"Square number list: {square_numbers}")
 
 #c)
-print(f"The lenght of the even number list is {len(even_numbers)}, and of the square number list is {len(square_numbers)}")
+print(f"The lenght of the even number list is {len(even_numbers)}, and of the square number list is {len(square_numbers)}\n")
+
+
+# 2: Dato un dizionario di impiegati
+# a) Stampa i nomi dei dipendenti con età ≥ 30
+# b) Calcola l'età media del team
+# c) Se più della metà del team ha almeno 30 anni, stampa "Team Senior", altrimenti "Team Junior"
+
+employees = {'Anna': 28, 'Luca': 35, 'Mara': 42, 'Giovanni': 25, 'Paolo': 38}
+print(f"Employees dictionary: {employees}")
+
+team_size = len(employees)
+age_sum = 0
+over30 = 0
+for name, age in employees.items():
+    if age >= 30:
+        #a)
+        print(name)
+        over30 += 1
+    age_sum += age
+
+#b)
+age_average = age_sum / team_size
+print(f"The age average of the team is {age_average}")
+
+#c)
+senior_team = over30 > (team_size/2)
+if senior_team:
+    print("Team Senior")
+else:
+    print("Team Junior")
+
