@@ -22,3 +22,4 @@ for i in positivi:
         sopra_media.append(i)
 
 print(f"Positivi: {positivi}\nNegativi: {negativi}\nZeri: {zeri}\nMedia totale: {media}\nPositivi > media: {sopra_media}")
+
