@@ -39,3 +39,48 @@ if eta >= 18:
     print("Maria Rossi è maggiorenne.")
 else:
     print("Maria Rossi è minorenne.")
+
+studenti = {}
+totvoti = 0
+numvoti = 0
+promossi = 0
+continuare = True
+while continuare:
+    scelta = int(input("MENU:\n1)Aggiungi studente\n2)Visualizza studenti\n3)Rimuovi studente\n4)Svuota lista studenti\n5)Esci\nIns. numero azione: "))
+    print("\n")
+    if scelta == 1:
+        print("Aggiungi Studente.")
+        nome = input("Nome: ").strip().capitalize()
+        voto = int(input("Voto: "))
+        if voto >= 6:
+            stato = "Promosso"
+        else:
+            stato = "Bocciato"
+        studenti[nome] = [{"voto":voto}, stato]
+        
+
+    elif scelta == 2:
+        print(f"Lista Studenti:")
+        for i in studenti:
+            print(f"{i}:{studenti[i]}")
+        print("\n")
+
+    elif scelta == 3:
+        nome = input("Elimina Studente.\nNome: ").strip().capitalize()
+        if nome in studenti:
+            studenti.pop(nome)
+            print("Studente Rimosso!")
+        else:
+            print("Studente non Presente!")
+
+    elif scelta == 4:
+        studenti = {}
+        print("Lista Svuotata!")
+
+    elif scelta == 5:
+        continuare = False
+        print("Sei uscito!")
+
+    else:
+        print("Inserisci un numero valido!")
+
