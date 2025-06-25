@@ -1,6 +1,7 @@
+
 numbers = [12, 7, 9, 20, 33, 4, 18]
 
-numeri_pari = []
+numeri_pari = [] 
 numeri_quadri = []
 for n in numbers:
     if n % 2 == 0:
