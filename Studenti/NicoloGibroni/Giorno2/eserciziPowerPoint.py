@@ -89,4 +89,73 @@ while True:
         break
     somma += i
     n +=1
-print(f"La somma dei numeri è: {somma}\nLa media dei numeri è: {somma/n}")
+if n != 0:
+    print(f"La somma dei numeri è: {somma}\nLa media dei numeri è: {somma/n}")
+
+"""------------------------------------------------------------------------------"""
+
+
+## Livello 3 – Insiemi di dati più ricchi
+
+"""------------------------------------------------------------------------------"""
+
+# 8. **Analisi di dizionario**
+spesa = {"mele": 3.2, "pane": 1.0, "latte": 1.5}
+articolo = input("Articolo: ")
+prezzo = float(input("Prezzo: "))
+spesa.update({articolo:prezzo})
+print(spesa)
+max = 0
+chiave = ""
+tot = 0
+for i in spesa:
+    if spesa[i] > max:
+        max = spesa[i]
+        chiave = i
+    tot += spesa[i]
+spesa.pop(chiave)
+print(f"Il prezzo totale è: {tot}, l'articolo più costoso è: {chiave}\n",spesa)
+
+"""------------------------------------------------------------------------------"""
+
+# 10. **Rubrica telefonica**
+#     -   Implementa un semplice menu testuale con queste opzioni:
+#         1. Aggiungi contatto (`nome` → `numero`)
+#         2. Cerca numero per nome
+#         3. Elenca tutti i contatti ordinati alfabeticamente
+#         4. Elimina un contatto
+#         5. Esci
+#     -   Usa un **dizionario** per archiviare i dati, i **set** per verificare duplicati di nomi, cicli `while` per mantenere il programma attivo, e una serie di condizioni `if` per gestire il menu.
+
+rubrica = {}
+while True:
+    scelta = int(input("MENU:\n1)Aggiungi contatto\n2)Cerca numero per nome\n3)Elenco contatti\n4)Elimina un contatto\n5)Esci\nIns. numero azione: "))
+    if scelta == 1:
+        print("Aggiungi Contatto.")
+        nome = input("Nome: ").strip().capitalize()
+        if nome in rubrica:
+            print("Nome già salvato")
+        else:
+            numero = int(input("Numero: "))
+            rubrica[nome] = numero
+        
+    elif scelta == 2:
+        nome = input("Cerca Numero.\nNome: ").strip().capitalize()
+        if nome in rubrica:
+            print(rubrica.get(nome))
+
+    elif scelta == 3:
+        listaOrdinata = list(rubrica)
+        listaOrdinata.sort()
+        print(f"I numeri in rubrica sono:\n{listaOrdinata}")
+
+    elif scelta == 4:
+        nome = input("Elimina Numero.\nNome: ").strip().capitalize()
+        if nome in rubrica:
+            print(rubrica.pop(nome))
+
+    elif scelta == 5:
+        print("Sei uscito!")
+        break
+    else:
+        print("Inserisci un numero valido!")
