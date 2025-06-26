@@ -95,4 +95,21 @@ while True:
 
 media = somma / contatore 
 
+#Alternative
+
+numeri = []
+totale = 0
+
+while True:
+    n = float(input("Digita un numero o usa 0 per terminare: "))
+    if n == 0:
+        break
+    numeri.append(n)
+
+print("somma:", sum(numeri))
+print("somma:", totale)
+print("meida", totale / len(numeri))
+print("media:", sum(numeri) / len(numeri))
+
+
 
