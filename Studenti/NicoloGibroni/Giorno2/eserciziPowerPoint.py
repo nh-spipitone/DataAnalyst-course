@@ -75,3 +75,18 @@ for i in range(11):
     print(f"Tabellina del numero {i}:")
     for i2 in range(11):
         print(f"-   {i}X{i2}={i*i2}")
+
+"""------------------------------------------------------------------------------"""
+
+# 7. **Inserimento controllato (`while`)**
+#     - Continua a chiedere all’utente un numero finché non digita `0`.
+#     - Alla fine mostra la somma e la media dei numeri inseriti (escludendo lo 0).
+somma = 0
+n = 0
+while True:
+    i = int(input("Ins un numero e 0 per uscire: "))
+    if i == 0:
+        break
+    somma += i
+    n +=1
+print(f"La somma dei numeri è: {somma}\nLa media dei numeri è: {somma/n}")
