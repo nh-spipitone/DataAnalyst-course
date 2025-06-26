@@ -16,3 +16,6 @@ print(f"La media delle età degli studenti è: {media_eta}")
 eta_studenti.sort(reverse=True)
 
 print(f"L'età più alta è: {eta_studenti[0]}")
+
+
+
