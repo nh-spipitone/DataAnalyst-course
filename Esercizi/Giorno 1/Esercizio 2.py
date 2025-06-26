@@ -35,3 +35,6 @@ mediaeta = int(sommaeta / len(employees))
 print("Dipendenti over 30:", dipendenti_over_30)
 # Stampa l'età media dei dipendenti
 print("Eta media dei dipendenti:", mediaeta)
+
+prova="asda"
+prova.startswith("a")  # Verifica se la stringa inizia con "a"
