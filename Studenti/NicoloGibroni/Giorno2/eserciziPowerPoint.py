@@ -52,5 +52,26 @@ tipo_collezione(tempTupla)
 # 5. **Categorie di voto (if / elif / else)**
 #     - Chiedi all’utente un voto (0-100).
 #     - Stampa “Insufficiente” (<60), “Sufficiente” (60-69), “Buono” (70-79), “Ottimo” (80-89), “Eccellente” (90-100).
+voto = 0
+while voto>100 or voto<=0:
+    voto = int(input("Ins voto tra 1-100: "))
+if voto >= 90:
+    print("Eccellente")
+elif voto >= 80:
+    print("Ottimo")
+elif voto >= 70:
+    print("Buono")
+elif voto >= 60:
+    print("Sufficiente")
+else:
+    print("Insufficiente")
 
+"""------------------------------------------------------------------------------"""
 
+# 6. **Tabelline con `for` e `range`**
+#     - Usa un ciclo `for` per stampare la tabellina del 7 da 1 a 10.
+#     - Estendi l’esercizio per stampare le tabelline da 1 a 10 in un formato a griglia.
+for i in range(11):
+    print(f"Tabellina del numero {i}:")
+    for i2 in range(11):
+        print(f"-   {i}X{i2}={i*i2}")
