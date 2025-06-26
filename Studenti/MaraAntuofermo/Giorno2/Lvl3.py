@@ -25,7 +25,7 @@ print("Benvenuto nella rubrica telefonica!")
 rubrica = {}
 
 while True:
-    comando = int(input("Cosa vuoi fare? \n1. Aggiungi un contatto \n2. Cerca numero per nome \n3. Elenca tutti i contatti ordinati alfabeticamente \n4. Elimina un contatto \n5. Esci\n"))
+    comando = int(input("Cosa vuoi fare? \n1. Aggiungi un contatto \n2. Cerca numero per nome \n3. Elenca tutti i contatti ordinati alfabeticamente \n4. Elimina un contatto \n5. Esci\n \n Digita qui"))
     if comando == 5:
         print("Uscita dal programma.")
         break #Esce dal ciclo
