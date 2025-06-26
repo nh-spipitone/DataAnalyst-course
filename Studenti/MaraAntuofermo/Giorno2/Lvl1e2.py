@@ -46,4 +46,53 @@ print("Nuova lunghezza numeri", len(numeri_unici))
 #Livello 2
 #Punto 5
 
-voto = 
+voto = int(input("Inserisci il voto: "))
+
+if voto < 60:    #if voto >= 60 and voto < 69: 
+    print("Insufficiente")
+
+elif voto <= 69:
+    print("Sufficiente")
+
+elif voto <= 79:
+    print("Buono")
+
+elif voto <= 89:
+    print("Ottimo")
+
+else:
+    print("Eccellente")    
+
+print("Il voto è:", voto)
+
+
+#Punto 6
+
+tabellina_del_7 = []
+
+for n in range (1, 11): 
+    riga = ""
+    for i in range (1,11):  #for i in range(1, 11):
+        tabellina = n * i   #tabellina = 7 * i
+        tabellina_del_7.append(f"7 x {i} = {tabellina}")  #print(f"{n} x {i} = {tabellina}")  #print(f"7 x {n} = {tabellina}")
+        riga += f"{n} x {i} = {tabellina}"  
+        print(riga)
+
+
+#Punto 7
+
+somma = 0 
+media = 0
+contatore = 0 
+numeri = []
+
+while True:
+    n = float(input("Digita un numero o usa 0 per terminare: "))
+    if n == 0:
+        break
+    contatore += 1 
+    somma = somma + n 
+
+media = somma / contatore 
+
+
