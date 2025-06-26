@@ -63,28 +63,28 @@
 
 # #punto6
 
-# tabellina_7 = []
+tabellina_7 = []
 
-# for n in range(1,11):
-#     riga = ""
-#     for i in range(1,11):
-#         tabellina = n * i
-#         tabellina_7.append(f"7 x {i} = {tabellina}")
-#         riga += f" {n} x {i} = {tabellina}"
-#         print(riga)
+for n in range(1,11):
+    riga = ""
+    for i in range(1,11):
+        tabellina = n * i
+        tabellina_7.append(f"7 x {i} = {tabellina}")
+        riga += f" {n} x {i} = {tabellina}"
+    print(riga)
 
 # #punto8
 
-# somma = 0
-# media = 0
-# contatore = 0
-# while True:
-#     n = float(input("digita un numero oppure usa 0 per terminare:"))
-#     if n == 0:
-#         break
-#     contatore += 1
-#     somma = somma + n
-# media = somma /contatore
+somma = 0
+media = 0
+contatore = 0
+while True:
+    n = float(input("digita un numero oppure usa 0 per terminare:"))
+    if n == 0:
+        break
+    contatore += 1
+    somma = somma + n
+media = somma /contatore
 
 
 # numeri = []
@@ -97,27 +97,33 @@
 #     totale += n
 
 # print("somma:", sum(numeri))
+# print("somma:", totale)
+# print("media:", totale / len(numeri))
 # print("media:", sum(numeri) / len(numeri))
-# print("numeri", numeri)
+
     
     
     #esercizio3
     #punto8
     
-# spesa = {"mele": 3.2, "pane": 1.0, "latte": 1.5}
+spesa = {"mele": 3.2, "pane": 1.0, "latte": 1.5}
+totale = 0
+inserisci_articolo = str(input("inserisci un articolo da aggiungere alla spesa: "))
+inserisci_prezzo = float(input("inserisci il suo prezzo:"))
+spesa[inserisci_articolo] = inserisci_prezzo
+print("lista della spesa aggiunta:", spesa)
+
+
+for aricolo, prezzo in spesa.items():
+    print(f"prezzo: {prezzo} euro")
+    totale += prezzo
+print(f"totale spesa: {totale} euro")
+
 # totale = 0
-# inserisci_articolo = str(input("inserisci un articolo da aggiungere alla spesa: "))
-# inserisci_prezzo = float(input("inserisci il suo prezzo:"))
-# spesa[inserisci_articolo] = inserisci_prezzo
-# print("lista della spesa aggiunta:", spesa)
-
-
-# for aricolo, prezzo in spesa.items():
-#     print(f"prezzo: {prezzo} euro")
-    
 # for prezzo in spesa.values():
 #     print(f"prezzo : {prezzo} euro")
 #     totale += prezzo
+# print(f"totale spesa: {totale} euro")
 
 
 #punto9
