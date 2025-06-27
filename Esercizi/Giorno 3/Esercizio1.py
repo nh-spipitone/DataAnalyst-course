@@ -30,6 +30,17 @@ def fizzbuzz_personalizzato(n: int, parola: str) -> list[str]:
     # Restituisce la lista completa dei risultati
     return risultati
 
+while True:
+    n= int(input("Inserisci un numero intero maggiore o uguale a 1: "))
+    parola= input("Inserisci una parola: ")
+    risultato = fizzbuzz_personalizzato(n, parola)
+    print(risultato)
+    continua = input("Vuoi continuare? (s/n): ")
+    if continua.lower() != 's':
+        break
+
+# Esempio di utilizzo della funzione fizzbuzz_personalizzato
+
 
 while True:
     n=int(input("Inserisci un numero intero maggiore o uguale a 1:"))
