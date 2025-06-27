@@ -1,0 +1,13 @@
+import pandas as pd
+
+def carica_dati (percorso:str) -> pd.DataFrame:
+    df=pd.read_csv(percorso)
+    return df
+
+def riepilogo_vendite(df: pd.DataFrame) -> pd.DataFrame:
+    totale_quantita= df["quantita"].sum()
+    df["ricavo"]= df["quantita"]*df["prezzo_unitario"]
+    totale_ricavi= df["ricavo"].sum()
+    ordine_medio= totale_ricavi / len(df)
+
+    return pd.DataFrame ({"totale_quantita":[totale_quantita],"totale_ricavi":[totale_ricavi], "ordine_medio":[ordine_medio]})

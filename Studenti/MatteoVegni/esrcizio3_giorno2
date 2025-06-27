@@ -1,0 +1,25 @@
+spesa = {"mele": 3.2, "pane": 1.0, "latte": 1.5}
+
+# Inserisco un nuovo articolo e prezzo da tastiera
+inserisci_articolo = input("Inserisci un articolo da aggiungere alla spesa: ")
+inserisci_prezzo = float(input("Inserisci il suo prezzo: "))
+spesa[inserisci_articolo] = inserisci_prezzo
+
+print("Lista della spesa aggiornata:", spesa)
+
+totale = 0
+
+# Stampo ogni articolo e prezzo e calcolo il totale
+for articolo, prezzo in spesa.items():
+    print(f"{articolo}: {prezzo} euro")
+    totale += prezzo
+
+print(f"Totale spesa: {totale} euro")
+
+# --- Opzionale: calcolo totale usando solo i prezzi (valori) ---
+totale = 0
+for prezzo in spesa.values():
+    print(f"Prezzo: {prezzo} euro")
+    totale += prezzo
+
+print(f"Totale spesa (calcolato da valori): {totale} euro")
