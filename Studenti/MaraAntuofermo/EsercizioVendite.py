@@ -32,20 +32,8 @@ def cerca_prodotto(nome_prodotto: str, df: pd.DataFrame):
 
         if nome_prodotto.lower() == prodotto.lower():
             print(f"Prodotto trovato: {prodotto}")
-            print(
-                f"Quantità: {df['quantita'][contatore]} Prezzo Unitario:{df['prezzo_unitario'][contatore]}"
-            )
+            print(f"Quantità: {df['quantita'][contatore]} Prezzo Unitario:{df['prezzo_unitario'][contatore]}")
         contatore += 1
-
-
-def cerca_prodotto_efficiente(nome_prodotto: str, df: pd.DataFrame):
-    for index, row in df.iterrows():
-        prodotto = row["prodotto"]
-        if nome_prodotto.lower() == prodotto.lower():
-            print(f"Prodotto trovato: {prodotto}")
-            print(
-                f"Quantità: {row['quantita']} Prezzo Unitario:{row['prezzo_unitario']}"
-            )
 
 
 cerca_prodotto("Penna", carica_dati("Esercizi\\Giorno 3\\vendite.csv"))
