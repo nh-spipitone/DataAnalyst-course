@@ -13,11 +13,17 @@ def riepilogo_vendite(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame ({"totale_quantita":[totale_quantita],"totale_ricavi":[totale_ricavi], "ordine_medio":[ordine_medio]})
 
 def cerca_prodotto(nome_prodotto: str, df: pd.DataFrame):
-    k = 0
-    for prodotto in df["prodotto"]:
-        if nome_prodotto.lower() == prodotto.lower():
-            print(f"Prodotto trovato: {prodotto}\nQuantità: {df['quantità'][k]} Prezzo Unitario: {df['prezzo_unitario'][k]}")
-        k += 1
+    for index, row in df.iterrows():
+        if nome_prodotto.lower() == row["prodotto"].lower():
+            print(f"Prodotto trovato: {row["prodotto"]}\nQuantità: {row['quantita']} Prezzo Unitario: {row['prezzo_unitario']}")
 
 
-"DataAnalyst-course\Esercizi\Giorno 3\vendite.csv"
+# def cerca_prodotto(nome_prodotto: str, df: pd.DataFrame):
+#     k = 0
+#     for prodotto in df["prodotto"]:
+#         if nome_prodotto.lower() == prodotto.lower():
+#             print(f"Prodotto trovato: {prodotto}\nQuantità: {df['quantita'][k]} Prezzo Unitario: {df['prezzo_unitario'][k]}")
+#         k += 1
+
+
+cerca_prodotto("Penna", carica_dati("DataAnalyst-course\Esercizi\Giorno 3\\vendite.csv"))
