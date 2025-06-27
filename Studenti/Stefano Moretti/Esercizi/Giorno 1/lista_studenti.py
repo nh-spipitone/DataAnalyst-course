@@ -7,8 +7,8 @@ class gestionale_scuola:
 def gestionale_studenti():
     print("Benvenuto nel gestore di studenti!")
     studenti = []
-    x = True
-    while x:
+    
+    while True:
         try:
             comando = str(input("Cosa vuoi fare? Digita un numero per:\n1. Aggiungere uno studente\n2. Visualizzare gli studenti\n3. Rimuovere uno studente\n4. Svuotare la lista\n5. Uscire\n"))
             if comando == "1":
@@ -34,7 +34,7 @@ def gestionale_studenti():
                 print("Lista degli studenti svuotata con successo!")
             elif comando == "5":
                 print("Arrivederci!")
-                x = False
+                break
         except ValueError as e:
             print(f"Errore: {e}. Per favore, inserisci un valore valido.")
             continue

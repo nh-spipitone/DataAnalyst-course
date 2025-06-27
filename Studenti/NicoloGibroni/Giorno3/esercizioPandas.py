@@ -25,5 +25,24 @@ def cerca_prodotto(nome_prodotto: str, df: pd.DataFrame):
 #             print(f"Prodotto trovato: {prodotto}\nQuantità: {df['quantita'][k]} Prezzo Unitario: {df['prezzo_unitario'][k]}")
 #         k += 1
 
+def salva_riepilogo(riepilogo: pd.DataFrame, percorso: str):
+    riepilogo.to_csv(percorso, index = False)
+    print(f"Riepilogo salvato in {percorso}")
 
-cerca_prodotto("Penna", carica_dati("DataAnalyst-course\Esercizi\Giorno 3\\vendite.csv"))
+df = carica_dati("DataAnalyst-course\\Esercizi\\Giorno 3\\vendite.csv")
+
+while True:
+    scelta = input("Vuoi vedere il riepilogo delle vendite (1) o cercare un prodotto (2)? ")
+
+    if scelta == "1":
+        riepilogo = riepilogo_vendite(df)
+        print(riepilogo)
+        salva_riepilogo(riepilogo, "riepilogo_vendite.csv1")
+    elif scelta == "2":
+        nome_prodotto = input("Inserisci il nome del prodotto da cercare: ")
+        cerca_prodotto(nome_prodotto, df)
+    else:
+        print("Scelta non valida. Riprova.")
+
+    continua = input("Vuoi continuare? (s/n): ")
+    if continua.lower() != "s": break
