@@ -31,8 +31,15 @@ def fizzbuzz_personalizzato(n: int, parola: str) -> list[str]:
     return risultati
 
 
-# Chiama la funzione con n=20 e parola="Sette", assegna il risultato alla variabile
-risultato = fizzbuzz_personalizzato(20, "Sette")
+while True:
+    n=int(input("Inserisci un numero intero maggiore o uguale a 1:"))
+    parola=input("Inserisci una parola:")
+    risultato= fizzbuzz_personalizzato(n,parola)
+    print(risultato)
+    continua= input("Vuoi continuare? (s/n):")
+    if continua.lower() != 's':
+        break
+    
 
-# Stampa il risultato della funzione
-print(risultato)
+
+
