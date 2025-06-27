@@ -34,27 +34,41 @@ def fizzbuzz_personalizzato(n:int, parola:str) -> list[str]:
             #print(i)
     return risultati
 
+print("Benvenuto nel programma FizzBuzz personalizzato!")
 # Esempio di utilizzo
 # test con n = 20 e parola = "Sette!"
 risultato = fizzbuzz_personalizzato(20, "Sette!")
-print("Risultati con n = 20 e parola 'Sette!':", risultato)
+print("Esempio di risultat0 con n = 20 e parola 'Sette!':", risultato)
 # Output atteso:
 # 1 , 2 , Fizz , 4 , Buzz , Fizz , Sette! , 8 , Fizz , Buzz , 11 , Fizz , 13 , 14 , FizzBuzz , Sette! , 17 , 18 , Fizz , 20
 
 # test con n negativo
-risultato_negativo = fizzbuzz_personalizzato(-5, "Sette!")
-print("Risultati con n negativo:", risultato_negativo)
+#risultato_negativo = fizzbuzz_personalizzato(-5, "Sette!")
+#print("Risultati con n negativo:", risultato_negativo)
 # Output atteso: []
 
 # test con input utente
-try:
-    n_input = int(input("Inserisci un numero intero positivo: "))
-    parola_input = input("Inserisci una parola: ")
-    if n_input > 0:
-        risultato_input = fizzbuzz_personalizzato(n_input, parola_input)
-        print("Risultati con input utente:", risultato_input)
-    else:
-        print("Il numero deve essere positivo.")
-except ValueError:
-    print("Input non valido. Assicurati di inserire prima un numero intero positivo e poi una parola.")
+while True:
+    try:
+        try:
+            n_input = int(input("\nInserisci un numero intero positivo: "))
+            parola_input = input("Inserisci una parola: ")
+            if n_input > 0:
+                risultato_input = fizzbuzz_personalizzato(n_input, parola_input)
+                print("Risultati con input utente:", risultato_input)
+            else:
+                print("Il numero deve essere positivo.")
+        except ValueError:
+            print("Input non valido. Assicurati di inserire prima un numero intero positivo e poi una parola.")
+        print("Vuoi continuare? (0 o Ctr+C per uscire, qualsiasi altro tasto per continuare)")
+        continua = input().strip().lower()
+        if continua == '0':
+            print("Uscita dal programma.")
+            break
+    except KeyboardInterrupt:
+        print("\nUscita dal programma.")
+        break
+    except Exception as e:
+        print(f"Si è verificato un errore: {e}")
+
 
