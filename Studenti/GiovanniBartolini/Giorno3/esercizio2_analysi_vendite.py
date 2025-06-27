@@ -1,7 +1,8 @@
 # Analisi di base di un dataset di vendite con funzioni, if, while e pandas
-
 # Livello: beginner data analyst – l’obiettivo è prendere dimestichezza con la lettura di file CSV, la gestione del flusso di controllo in Python e le prime operazioni di analisi dati con pandas.
+
 import pandas as pd
+
 
 # Funzione per caricare i dati
 def carica_dati(percorso_file:str) -> pd.DataFrame:
@@ -34,6 +35,7 @@ def carica_dati(percorso_file:str) -> pd.DataFrame:
         print(f"Errore imprevisto: {e}")
         return pd.DataFrame()
 
+
 # Funzione per calcolare il riepilogo delle vendite    
 def riepilogo_vendite(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -48,16 +50,53 @@ def riepilogo_vendite(df: pd.DataFrame) -> pd.DataFrame:
     if df.empty:
         return pd.DataFrame()  # Ritorna un DataFrame vuoto se non ci sono dati
     
-    df['ricavo'] = df['prezzo_unitario'] * df['quantita']
+    if 'ricavo' not in df.columns: # Controlla se la colonna 'ricavo' esiste
+       df['ricavo'] = df['prezzo_unitario'] * df['quantita']
     quantita_totale = df['quantita'].sum()
     ricavo_totale = df['ricavo'].sum()
     ordine_medio = ricavo_totale / len(df)
-    
+
     return pd.DataFrame({
         'quantita_totale': [quantita_totale],
         'ricavo_totale': [ricavo_totale],
         'ordine_medio': [ordine_medio]
     })
+
+
+# Funzione per stampare il riepilogo delle vendite
+def stampa_riepilogo(riepilogo: pd.DataFrame, prodotto: str = None):
+    """
+    Stampa il riepilogo delle vendite.
+    
+    Args:
+        riepilogo (pd.DataFrame): Il DataFrame contenente il riepilogo delle vendite.
+    """
+
+    if riepilogo.empty:
+        return # Non stampa nulla se il riepilogo è vuoto
+    titolo = f"Riepilogo vendite '{prodotto}'" if prodotto else "Riepilogo generale"
+    print("\n=== " + titolo.upper() + " ===")
+    print(f"Totale quantità: {riepilogo['quantita_totale'].values[0]}")
+    print(f"Totale ricavo: {riepilogo['ricavo_totale'].values[0]:.2f} €")
+    print(f"Ordine medio: {riepilogo['ordine_medio'].values[0]:.2f} €")
+    print("=" * (len(titolo) + 8)+ "\n")  # Stampa una linea di separazione in base alla lunghezza del titolo
+
+
+# Funzione per salvare il riepilogo delle vendite in un file CSV
+def salva_riepilogo(riepilogo: pd.DataFrame, percorso_file: str):
+    """
+    Salva il riepilogo delle vendite in un file CSV.
+    
+    Args:
+        riepilogo (pd.DataFrame): Il DataFrame contenente il riepilogo delle vendite.
+        percorso_file (str): Il percorso del file CSV in cui salvare il riepilogo.
+    """
+    try:
+        riepilogo.to_csv(percorso_file, index=False)
+        print(f"Riepilogo salvato con successo in {percorso_file}.")
+    except Exception as e:
+        print(f"Errore durante il salvataggio del riepilogo: {e}")
+
 
 # Funzione per analizzare un prodotto specifico nel DataFrame delle vendite
 def cerca_prodotto(df: pd.DataFrame, prodotto: str):
@@ -81,28 +120,16 @@ def cerca_prodotto(df: pd.DataFrame, prodotto: str):
 
     # genera un DataFrame filtrato per il prodotto specificato, senza case sensitivity
     df_prodotto = df[df['prodotto'].str.strip().str.lower() == prodotto.strip().lower()]
+    print(f"Vendite per il prodotto '{prodotto}':")
+    print(df_prodotto[['data', 'quantita', 'prezzo_unitario', 'ricavo']])
+    #usa la funzione riepilogo_vendite per calcolare il riepilogo delle vendite del prodotto selezionato
+    riepilogo_prodotto = riepilogo_vendite(df_prodotto)
     # stampa il riepilogo delle vendite per il prodotto specificato
-    print(f"Riepilogo per il prodotto '{prodotto}':")
-    print(df_prodotto[['data', 'quantita', 'prezzo_unitario']])
-    quantita_totale = df_prodotto['quantita'].sum()
-    ricavo_totale = (df_prodotto['prezzo_unitario'] * df_prodotto['quantita']).sum()
-    print(f"Quantità totale venduta: {quantita_totale}")
-    print(f"Ricavo totale: {ricavo_totale:.2f} euro")
+    stampa_riepilogo(riepilogo_prodotto, prodotto)
+    # salva il riepilogo delle vendite in un file CSV
+    salva_riepilogo(riepilogo_prodotto, f"riepilogo_vendite_{prodotto.lower()}.csv")
+    print(f"Riepilogo delle vendite per il prodotto '{prodotto}' salvato in 'riepilogo_vendite_{prodotto.lower()}.csv'.")
 
-# Funzione per salvare il riepilogo delle vendite in un file CSV
-def salva_riepilogo(riepilogo: pd.DataFrame, percorso_file: str):
-    """
-    Salva il riepilogo delle vendite in un file CSV.
-    
-    Args:
-        riepilogo (pd.DataFrame): Il DataFrame contenente il riepilogo delle vendite.
-        percorso_file (str): Il percorso del file CSV in cui salvare il riepilogo.
-    """
-    try:
-        riepilogo.to_csv(percorso_file, index=False)
-        print(f"Riepilogo salvato con successo in {percorso_file}.")
-    except Exception as e:
-        print(f"Errore durante il salvataggio del riepilogo: {e}")
 
 # Funzione principale per eseguire l'analisi delle vendite
 def main():
@@ -125,14 +152,13 @@ def main():
     if riepilogo.empty:
         print("Nessun riepilogo disponibile.")
     else:
-        print("Riepilogo delle vendite:")
-        print(riepilogo)
-        #salva_riepilogo(riepilogo, "riepilogo_vendite.csv")
+        stampa_riepilogo(riepilogo)
+        salva_riepilogo(riepilogo, "riepilogo_vendite.csv")
 
     lista_prodotti = df['prodotto'].unique()
-    print("Prodotti disponibili:", ", ".join(lista_prodotti))
     while True:
         try:
+            print("\nProdotti disponibili:", ", ".join(lista_prodotti))
             # Chiede all'utente il nome del prodotto da cercare
             prodotto = input("Inserisci il nome del prodotto da cercare (o 'esci' per terminare): ").strip()
             if prodotto.lower() == 'esci':
