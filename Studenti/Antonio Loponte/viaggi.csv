@@ -1,0 +1,7 @@
+id;nome;cognome;destinazione;data_partenza;data_ritorno;giorni;prezzo;servizi_extra;aeroporto_partenza
+1;Antonio;Loponte;New York;2025-06-11;2025-06-12;1;28;;Venezia Marco Polo
+2;Antonio;Loponte;Egitto;2025-06-10;2025-06-18;8;142;Bagagli extra(30€);Milano Malpensa
+3;Antonio;Loponte;Zurigo;2025-06-18;2025-06-26;8;134;Bagagli extra(30€);Milano Malpensa
+4;dgdsg;Rossi;Zurigo;2025-06-18;2025-06-20;2;86;"Trasporto animali(50€);Wi-Fi a bordo(10€)";Napoli Capodichino
+5;dada;Rossi;Australia;2025-06-16;2025-06-24;8;245;"Bagagli extra(30€);Cibo in cabina(15€)";Torino Caselle
+6;Matteo;Salvini;Egitto;2025-06-16;2025-06-18;2;28;"Trasporto animali(50€);Imbarco prioritario(20€)";Milano Malpensa
