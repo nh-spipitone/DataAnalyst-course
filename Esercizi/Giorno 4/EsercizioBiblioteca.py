@@ -1,48 +1,55 @@
 # Esercizio Python: Gestione Biblioteca (OOP & Logica)
 # Crea un semplice gestionale per una biblioteca che tiene traccia dei libri e dei prestiti.
 
-class Biblioteca:
-    def __init__(self, libri):
-        self.libri = libri
-    
-    def aggiungi_libro(self, libro):
-        self.libri.append(libro)
 
-    def prestito(self, titolo):
+class Biblioteca:  # Definizione della classe Biblioteca
+    def __init__(self, libri):  # Costruttore della classe, riceve una lista di libri
+        self.libri = libri  # Attributo che contiene la lista dei libri
 
-        for libro in self.libri:
-            if titolo == libro.titolo:
-                if libro.disponibile:
-                    libro.presta()
-                    return True
-                return False
-        print("Il libro non esiste!")
-        return False
+    def aggiungi_libro(self, libro):  # Metodo per aggiungere un libro alla biblioteca
+        self.libri.append(libro)  # Aggiunge il libro alla lista dei libri
 
-    def restituzione(self, titolo):
-        for libro in self.libri:
-            if titolo == libro.titolo:
-                if not libro.disponibile:
-                    libro.restituisci()
-                    return True
-                return False
-        print("Il libro non esiste!")
-        return False
-        
+    def prestito(self, titolo):  # Metodo per prestare un libro dato il titolo
 
-    def elenco_disponibili(self):
-        libri_disponibili = []
-        for libro in self.libri:
-            if libro.disponibile:
-                libri_disponibili.append(str(libro))
-        return libri_disponibili
+        for libro in self.libri:  # Cicla su tutti i libri della biblioteca
+            if titolo == libro.titolo:  # Se il titolo corrisponde
+                if libro.disponibile:  # Se il libro è disponibile
+                    libro.presta()  # Presta il libro (imposta disponibile a False)
+                    return True  # Restituisce True se il prestito è avvenuto
+                return False  # Restituisce False se il libro non è disponibile
+        print("Il libro non esiste!")  # Messaggio se il libro non è trovato
+        return False  # Restituisce False se il libro non esiste
 
-    def cerca_per_autore(self, autore):
-        libri_autore = []
-        for libro in self.libri:
-            if autore == libro.autore:
-                libri_autore.append(str(libro))
-        return libri_autore
+    def restituzione(self, titolo):  # Metodo per restituire un libro dato il titolo
+        for libro in self.libri:  # Cicla su tutti i libri
+            if titolo == libro.titolo:  # Se il titolo corrisponde
+                if (
+                    not libro.disponibile
+                ):  # Se il libro non è disponibile (quindi in prestito)
+                    libro.restituisci()  # Restituisce il libro (imposta disponibile a True)
+                    return True  # Restituisce True se la restituzione è avvenuta
+                return False  # Restituisce False se il libro era già disponibile
+        print("Il libro non esiste!")  # Messaggio se il libro non è trovato
+        return False  # Restituisce False se il libro non esiste
+
+    def elenco_disponibili(self):  # Metodo per ottenere la lista dei libri disponibili
+        libri_disponibili = []  # Lista vuota per i libri disponibili
+        for libro in self.libri:  # Cicla su tutti i libri
+            if libro.disponibile:  # Se il libro è disponibile
+                libri_disponibili.append(
+                    str(libro)
+                )  # Aggiunge la rappresentazione testuale del libro
+        return libri_disponibili  # Restituisce la lista dei libri disponibili
+
+    def cerca_per_autore(self, autore):  # Metodo per cercare libri di un certo autore
+        libri_autore = []  # Lista vuota per i libri dell'autore
+        for libro in self.libri:  # Cicla su tutti i libri
+            if autore == libro.autore:  # Se l'autore corrisponde
+                libri_autore.append(
+                    str(libro)
+                )  # Aggiunge la rappresentazione testuale del libro
+        return libri_autore  # Restituisce la lista dei libri dell'autore
+
 
 class Libro:  # Definizione della classe Libro
     def __init__(self, titolo, autore, disponibile):  # Costruttore della classe
@@ -56,8 +63,11 @@ class Libro:  # Definizione della classe Libro
     def restituisci(self):  # Metodo per restituire il libro
         self.disponibile = True  # Imposta disponibile a True (disponibile)
 
-    def __str__(self):
-        return f"Titolo:{self.titolo} Autore:{self.autore} Disponibile:{self.disponibile}"
+    def __str__(self):  # Metodo per la rappresentazione testuale del libro
+        return (
+            f"Titolo:{self.titolo} Autore:{self.autore} Disponibile:{self.disponibile}"
+        )
+
 
 # def mostra_libri_disponibili(libri):  # Funzione per mostrare i libri disponibili
 #     for libro in libri:  # Cicla su tutti i libri
@@ -70,8 +80,6 @@ class Libro:  # Definizione della classe Libro
 #         if not libro.disponibile:  # Se il libro non è disponibile
 #             contatore_libri += 1  # Incrementa il contatore
 #     print(f"Il numero di libri non disponibili è {contatore_libri}")  # Stampa il risultato
-
-
 
 # # Lista di oggetti Libro con titolo, autore e disponibilità
 #  libri = [
@@ -97,34 +105,46 @@ class Libro:  # Definizione della classe Libro
 
 # conta_libri_non_disponibili(libri)  # Conta e stampa il numero di libri non disponibili
 
+# Crea un oggetto Biblioteca con una lista iniziale di libri
+biblioteca = Biblioteca(
+    libri=[
+        Libro("Il nome della rosa", "Umberto Eco", True),  # Libro disponibile
+        Libro("1984", "George Orwell", True),  # Libro disponibile
+        Libro("Orgoglio e pregiudizio", "Jane Austen", False),  # Libro non disponibile
+        Libro(
+            "Il piccolo principe", "Antoine de Saint-Exupéry", True
+        ),  # Libro disponibile
+        Libro("Moby Dick", "Herman Melville", True),  # Libro disponibile
+    ]
+)
 
+biblioteca.aggiungi_libro(
+    Libro("Il nome della rosa2", "Umberto Eco", True)
+)  # Aggiunge un nuovo libro
+print("Elenco disponibili:")  # Stampa intestazione
+print(biblioteca.elenco_disponibili())  # Stampa la lista dei libri disponibili
 
+print("-----------------------")  # Separatore
 
-biblioteca = Biblioteca( libri = [
-     Libro("Il nome della rosa", "Umberto Eco", True),
-     Libro("1984", "George Orwell", True),
-     Libro("Orgoglio e pregiudizio", "Jane Austen", False),
-     Libro("Il piccolo principe", "Antoine de Saint-Exupéry", True),
-     Libro("Moby Dick", "Herman Melville", True)
- ])
+biblioteca.prestito("Il piccolo principe")  # Presta il libro "Il piccolo principe"
+print("Elenco disponibili:")  # Stampa intestazione
+print(
+    biblioteca.elenco_disponibili()
+)  # Stampa la lista aggiornata dei libri disponibili
 
-biblioteca.aggiungi_libro(Libro("Il nome della rosa2", "Umberto Eco", True))
-print("Elenco disponibili:")
-print(biblioteca.elenco_disponibili())
+print("-----------------------")  # Separatore
 
-print("-----------------------")
+biblioteca.restituzione(
+    "Il piccolo principe"
+)  # Restituisce il libro "Il piccolo principe"
+print("Elenco disponibili:")  # Stampa intestazione
+print(
+    biblioteca.elenco_disponibili()
+)  # Stampa la lista aggiornata dei libri disponibili
 
-biblioteca.prestito("Il piccolo principe")
-print("Elenco disponibili:")
-print(biblioteca.elenco_disponibili())
+print("-----------------------")  # Separatore
 
-print("-----------------------")
-
-biblioteca.restituzione("Il piccolo principe")
-print("Elenco disponibili:")
-print(biblioteca.elenco_disponibili())
-
-print("-----------------------")
-
-print("Elenco per autore:")
-print(biblioteca.cerca_per_autore("Umberto Eco"))
+print("Elenco per autore:")  # Stampa intestazione
+print(
+    biblioteca.cerca_per_autore("Umberto Eco")
+)  # Stampa la lista dei libri di Umberto Eco
