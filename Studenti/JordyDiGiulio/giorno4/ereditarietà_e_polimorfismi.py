@@ -1,3 +1,5 @@
+from datetime import date
+
 # Definizione della classe base Animale
 class Animale:
     # Costruttore che inizializza gli attributi comuni a tutti gli animali
@@ -65,3 +67,64 @@ mio_cane.abbaia()
 mio_gatto.mostra_informazioni()
 # Chiamata al metodo specifico per far miagolare il gatto
 mio_gatto.miagola()
+
+
+class Veicolo:
+    def __init__(self, marca, modello, anno):
+        self.marca = marca
+        self.modello = modello
+        self.anno = anno
+
+    def info(self):
+        return f"{self.anno} {self.marca} {self.modello}"
+
+
+class Auto(Veicolo):
+    def __init__(self, marca, modello, anno, porte):
+        super().__init__(marca, modello, anno) 
+        self.porte = porte
+
+    def info(self):
+        return f"{super().info()}, Porte: {self.porte}"
+
+
+class Moto(Veicolo):
+    def __init__(self, marca, modello, anno, cilindrata):
+        super().__init__(marca, modello, anno)
+        self.cilindrata = cilindrata
+
+    def info(self):
+        return f"{super().info()}, Cilindrata: {self.cilindrata}cc"
+
+
+
+
+
+class Prodotto:
+    def __init__(self, nome, prezzo):
+        self.nome = nome
+        self.prezzo = prezzo
+
+    def descrizione(self):
+        return f"Prodotto: {self.nome}, Prezzo: €{self.prezzo:.2f}"
+
+
+class Alimentari(Prodotto):
+    def __init__(self, nome, prezzo, scadenza):
+        super().__init__(nome, prezzo)
+        self.scadenza = scadenza  
+
+    def descrizione(self):
+        return (f"Alimentare: {self.nome}, Prezzo: €{self.prezzo:.2f}, "
+                f"Scadenza: {self.scadenza.strftime('%d/%m/%Y')}")
+
+
+class Elettronico(Prodotto):
+    def __init__(self, nome, prezzo, garanzia):
+        super().__init__(nome, prezzo)
+        self.garanzia = garanzia  
+
+    def descrizione(self):
+        return (f"Elettronico: {self.nome}, Prezzo: €{self.prezzo:.2f}, "
+                f"Garanzia: {self.garanzia}")
+
