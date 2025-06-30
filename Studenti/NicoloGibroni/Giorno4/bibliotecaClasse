@@ -1,0 +1,67 @@
+class Libro:
+    def __init__(self, titolo, autore, disponibile):
+        self.titolo = titolo
+        self.autore = autore
+        self.disponibile = disponibile
+
+    def presta(self):
+        self.disponibile = False
+        return self.disponibile
+
+    def restituisci(self):
+        self.disponibile = True
+        return self.disponibile
+    
+libri = [Libro("mario","5",True),Libro("cosimo","10",True),Libro("merlo","30",True),Libro("pino","85",True),Libro("giammo","100",True)]
+
+while True:
+    while True:
+        try:
+            choice = int(input("1)print\n2)presta\n3)restituisci\n"))
+            break
+        except:
+            print("ins un numero!")
+
+    if choice == 1:
+        n = 0
+        for i in libri:
+            if i.disponibile:
+                print(i.titolo, i.autore)
+            else:
+                n+=1
+        print(f"i libri in prestito sono {n}!")
+
+    elif choice == 2:
+        while True:
+            try:
+                choice = int(input(f"che libro vuoi prestare tra 0 e {len(libri)-1}?"))
+                if choice <= 0 or choice >= len(libri):
+                    break
+                else:
+                    print("ins un num valido!")
+            except:
+                print("ins un numero!")
+        libri[choice].presta()
+    
+    elif choice == 3:
+        while True:
+            try:
+                choice = int(input(f"che libro vuoi restituire tra 0 e {len(libri)-1}?"))
+                if choice <= 0 or choice >= len(libri):
+                    if not libri[choice].disponibile:
+                        break
+                    else:
+                        print("libro già restituito o disponibile!")
+                else:
+                    print("ins un num valido!")
+            except:
+                print("ins un numero!")
+        libri[choice].restituisci()
+
+    else:
+        print("Sei uscito!")
+        break
+
+
+
+    
