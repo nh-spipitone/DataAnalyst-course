@@ -1,0 +1,17 @@
+class Studente:
+    def __init__(self, nome, voto):
+        self.nome = nome
+        self.voto = voto
+
+    def ha_superato(self):
+        return self.voto>=18
+
+    
+studenti=[Studente("mario",5),Studente("cosimo",10),Studente("merlo",30),Studente("pino",85),Studente("giammo",100)]
+a = 0
+for i in studenti:
+    if i.ha_superato():
+        print(i.nome)
+    else:
+        a += 1
+print(f"non hanno superato l'esame {a} studenti")
