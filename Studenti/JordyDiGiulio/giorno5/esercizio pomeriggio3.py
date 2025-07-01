@@ -40,8 +40,23 @@ plt.tight_layout()
 plt.show()
 
 
+
 # percentuale vendite al mese
 plt.figure(figsize=(8,6))
 plt.pie(vendite_mensili, labels=vendite_mensili.index.strftime('%b'), autopct='%1.1f%%')
+plt.tight_layout()
+plt.show()
+
+
+
+#Trovare e visualizzare i 3 giorni con le vendite più alte, in ordine decrescente e crea un grafico a barre verticali per confrontare le vendite di quei 3 giorni.
+vendite_giornaliere = df.sort_values(by='Vendite', ascending=False).head(3)
+print(vendite_giornaliere)
+
+plt.figure(figsize=(8,6))
+plt.bar(vendite_giornaliere.index.strftime('%d-%b'), vendite_giornaliere['Vendite'], color='skyblue', edgecolor='black')
+plt.xlabel('Data')
+plt.ylabel('Vendite')
+plt.yticks(range(0,max(vendite_mensili.values),500))
 plt.tight_layout()
 plt.show()
