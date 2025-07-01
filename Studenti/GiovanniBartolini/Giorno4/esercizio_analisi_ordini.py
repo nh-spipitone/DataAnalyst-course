@@ -45,15 +45,16 @@ print("\nFatturato giornaliero:")
 print(fatturato_giornaliero)
 
 # Grafico a barre del fatturato giornaliero
-# import matplotlib.pyplot as plt
-# #plt.switch_backend('TkAgg')
-# fatturato_giornaliero.plot(kind='bar', figsize=(10, 5))
-# plt.title('Fatturato Giornaliero')
-# plt.xlabel('Data')
-# plt.ylabel('Fatturato Totale')
-# plt.xticks(rotation=45)
-# plt.tight_layout()
-# plt.show()
+import matplotlib.pyplot as plt
+#plt.switch_backend('TkAgg')
+fatturato_giornaliero.plot(kind='bar', figsize=(10, 6))
+plt.title('Fatturato Giornaliero')
+plt.xlabel('Giorno')
+plt.ylabel('Fatturato Totale')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+plt.savefig('fatturato_giornaliero.png')
 
 # (Extra) Calcola la media del prezzo unitario per ogni prodotto.
 media_prezzo_per_prodotto = df.groupby('Prodotto')['Prezzo_unitario'].mean()
