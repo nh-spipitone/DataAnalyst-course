@@ -12,14 +12,14 @@ print(df_consegnati)
 
 df["Totale"] = df["Quantità"] * df["Prezzo"]
 
-totale_per_categoria = df.goupby("Categoria") ["Totale"].sum()
+totale_per_categoria = df.groupby("Categoria") ["Totale"].sum()
 print(totale_per_categoria)
 
 plt.figure(figsize=(10, 8))
-totale_per_categoria = df.groubpy("Categoria") ["Totale"].sum()
+totale_per_categoria = df.groupby("Categoria") ["Totale"].sum()
 totale_per_categoria.plot(kind = "bar", color = "turquoise")
 plt.title("Totale spero per categoria", fontsize = 16)
-plt.xlabel8("Categoria", fontsize = 14)
+plt.xlabel("Categoria", fontsize = 14)
 plt.ylabel("Totale", fontsize = 14)
 plt.tight_layout()
 plt.show()
@@ -37,9 +37,9 @@ plt.ylabel("Spesa", fontsize = 14)
 plt.tight_layout()
 plt.show()
 
-mese_piu_costoso = spesa_mensile.idmax()
+mese_piu_costoso = spesa_mensile.idxmax()
 print(f"Mese più costoso {mese_piu_costoso}")
-categoria_piu_costosa = totale_per_categoria.idmax()
+categoria_piu_costosa = totale_per_categoria.idxmax()
 categoria_piu_costosa_tot = totale_per_categoria.max()
 print(f"La cetegoria più costosa è {categoria_piu_costosa} con un totale di {categoria_piu_costosa_tot}")
 
