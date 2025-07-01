@@ -26,6 +26,7 @@ totale_passeggeri = titanic['Name'].count()
 
 plt.figure(figsize=(10,5))
 plt.hist(titanic['Age'], bins=10, align='mid', color='skyblue', edgecolor='black')
+plt.yticks(range(0,2))
 plt.tight_layout()
 plt.show()
 
@@ -46,15 +47,15 @@ plt.show()
 
 
 
-sopravvissuti_uomini = titanic[(titanic['Sex'] == 'male') & (titanic['Survived'] == 1)]['Name'].tolist()
-sopravvissuti_donne = titanic[(titanic['Sex'] == 'female') & (titanic['Survived'] == 1)]['Name'].tolist()
-totale_sopravvissuti = len(sopravvissuti_uomini)+len(sopravvissuti_donne)
+gruppo = titanic.groupby('Sex')['Survived'].value_counts()
 
-plt.figure(figsize=(10,6))
-plt.bar(['uomini sopravvissuti', 'donne sopravvissute'], [len(sopravvissuti_uomini), len(sopravvissuti_donne)], color=['green', 'orange'])
+tabella = gruppo.unstack()
+
+tabella.plot(kind='bar', stacked=True, figsize=(8,6))
 plt.xlabel('Sesso')
-plt.ylabel('Numero di sopravvissuti')
-plt.yticks(range(0, totale_sopravvissuti+1, 2))
+plt.ylabel('Numero di passeggeri')
+plt.title('Sopravvissuti e non sopravvissuti per sesso')
+plt.legend(['Non sopravvissuti', 'Sopravvissuti'])
 plt.tight_layout()
 plt.show()
 
