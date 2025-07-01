@@ -26,23 +26,12 @@ prodotto_più_venduto = df.groupby('Prodotto')['Quantità'].sum().idxmax()
 print(prodotto_più_venduto)
 
 
-# calcola fatturato giornaliero 
 fatturato_giornaliero = df.groupby('Data')['Totale'].sum().reset_index()
 
 print(fatturato_giornaliero)
 
-# plot del fatturato giornaliero
-plt.figure(figsize=(10,8))
-plt.bar(fatturato_giornaliero["Data"], fatturato_giornaliero["Totale"], color='skyblue')
-plt.title("Fatturato Giornaliero", fontsize=16)
-plt.xlabel("Data", fontsize=12)
-plt.ylabel("Fatturato (€)", fontsize=12)
-plt.tight_layout
-plt.show()
 
-media_prezzoXprodotto = df.groupby('Prodotto')['Prezzo_unitario'].mean().reset_index()
 
-print(media_prezzoXprodotto)
 
 
 
