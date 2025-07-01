@@ -1,0 +1,31 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv(r'DataAnalyst-course\Esercizi\Giorno 5\vendite.csv')
+print(df.head())
+print("____________________________")
+
+fatturato_giornaliero = df.groupby("Data")["Prezzo_unitario"].sum().reset_index()
+print(fatturato_giornaliero)
+print("____________________________")
+
+df["Fatturato"] = df["Quantità"] * df["Prezzo_unitario"]
+print(df.head())
+print("____________________________")
+
+fatturato_totale_prodotto = df.groupby("Prodotto")["Prezzo_unitario"].sum().reset_index()
+print(fatturato_totale_prodotto)
+print("____________________________")
+
+plt.figure(figsize=(10,8))
+fatturato_totale_prodotto = df.groupby("Prodotto")["Prezzo_unitario"].sum()
+fatturato_totale_prodotto.plot(kind="bar")
+plt.title("Fatturato totslr per ogni prodotto")
+plt.xlabel("Prodotto")
+plt.ylabel("Fatturato in €")
+plt.tight_layout()
+plt.show()
+print("____________________________")
+
+prodotto_piu_venduto = fatturato_totale_prodotto.idxmax()
+faatturato_piu_venduto = 
