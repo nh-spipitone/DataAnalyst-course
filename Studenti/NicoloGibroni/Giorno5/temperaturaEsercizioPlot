@@ -1,0 +1,33 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv(r'DataAnalyst-course\Esercizi\Giorno 5\temperature.csv')
+df["Data"] = pd.to_datetime(df["Data"])
+
+prima_settimana = df[df["Data"].dt.day<=7]
+
+media_settimana = prima_settimana["Temperatura"].mean()
+
+media_totale = df["Temperatura"].mean()
+
+print(f"La media delle temperature della prima settimana è: {media_settimana:.2f}")
+
+print(f"La temperatura media totale è: {media_totale:.2f}")
+
+plt.figure(figsize=(10,8))
+plt.plot(df["Data"],df["Temperatura"],marker="o")
+plt.title("Grafico temperature")
+plt.xlabel("Data")
+plt.ylabel("Temperatura in Celsius")
+plt.tight_layout()
+plt.show()
+
+df["Giorno"] = df["Data"].dt.to_period("D")
+giorni_temperatura = df.groupby("Giorno")["Temperatura"]
+Giorno_Caldo = giorni_temperatura.max().idxmax()
+Giorno_caldo_Value = giorni_temperatura.max().max()
+Giorno_Freddo = giorni_temperatura.min().idxmin()
+Giorno_freddo_Value = giorni_temperatura.min().min()
+
+print(f"Il giorno più caldo è {Giorno_Caldo} con una temperatura di {Giorno_caldo_Value:.2f}")
+print(f"Il giorno più freeddo è {Giorno_Freddo} con una temperatura di {Giorno_freddo_Value:.2f}")
