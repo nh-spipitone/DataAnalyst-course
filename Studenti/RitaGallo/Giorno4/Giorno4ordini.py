@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv(r"Esercizi//Giorno 4//ordini.csv") 
+df = pd.read_csv(r"DataAnalyst-course\Esercizi\Giorno 4\ordini.csv") 
 
 print(df.head())
 
