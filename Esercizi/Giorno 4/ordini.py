@@ -2,7 +2,7 @@ import pandas as pd  # Importa la libreria pandas per la manipolazione dei dati
 import matplotlib.pyplot as plt  # Importa matplotlib per la creazione di grafici
 
 df = pd.read_csv(
-    r"Studenti\JordyDiGiulio\giorno4\ordini.csv"
+    r"DataAnalyst-course/Esercizi/Giorno 4/ordini.csv"
 )  # Legge il file CSV e lo carica in un DataFrame
 
 print(df.head())  # Stampa le prime 5 righe del DataFrame per una rapida ispezione
