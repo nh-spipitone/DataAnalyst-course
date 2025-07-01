@@ -1,0 +1,8 @@
+OrdineID,Data,Cliente,Prodotto,Quantità,Prezzo_unitario,Spedito
+1001,2024-06-01,Mario Rossi,Laptop,1,800.0,True
+1002,2024-06-01,Giulia Bianchi,Mouse,2,15.5,True
+1003,2024-06-02,Luigi Verdi,Monitor,1,200.0,False
+1004,2024-06-03,Mario Rossi,Mouse,1,15.5,True
+1005,2024-06-03,Anna Neri,Laptop,2,790.0,True
+1006,2024-06-03,Giulia Bianchi,Monitor,1,195.0,False
+1007,2024-06-04,Anna Neri,Mouse,3,14.0,True
