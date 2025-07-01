@@ -28,4 +28,4 @@ plt.show()
 print("____________________________")
 
 prodotto_piu_venduto = fatturato_totale_prodotto.idxmax()
-faatturato_piu_venduto = 
+faatturato_piu_venduto = fatturato_totale_prodotto.max()
