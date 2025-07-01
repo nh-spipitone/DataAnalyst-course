@@ -1,40 +1,40 @@
 # #livello1
 # #punto1
-# temperatura_max = [25, 30, 33, 35, 29]
+temperatura_max = [25, 30, 33, 35, 29]
 
-# media = 0
+media = 0
 
-# for temp in temperatura_max:
-#     media += temp
+for temp in temperatura_max:
+    media += temp
 
-# media = media / len(temperatura_max)
+media = media / len(temperatura_max)
 
-# print(f"la media della temperatura massima della settimana è {media} C°")
+print(f"la media della temperatura massima della settimana è {media} C°")
 
-# temperatura_max.sort(reverse=True)
+temperatura_max.sort(reverse=True)
 
-# print(f"la temperatura massima della settimana è {temperatura_max} C°")
+print(f"la temperatura massima della settimana è {temperatura_max} C°")
 
-# #punto2
+#punto2
 
-# tupla_temperatura = tuple(temperatura_max)
+tupla_temperatura = tuple(temperatura_max)
 
-# print(f"la tupla delle temperature massime è {tupla_temperatura}")
+print(f"la tupla delle temperature massime è {tupla_temperatura}")
 
-# # tupla_temperatura [0] = 24 immutabile
+# tupla_temperatura [0] = 24 immutabile
 
-# #punto3
-# numeri = [3, 5, 3, 7, 5, 9, 3]
+#punto3
+numeri = [3, 5, 3, 7, 5, 9, 3]
 
-# print("lunghezza numeri:", len(numeri))
+print("lunghezza numeri:", len(numeri))
 
-# numeri_unici = list(set(numeri))    #elimina i duplicati e converte in lista
+numeri_unici = list(set(numeri))    #elimina i duplicati e converte in lista
 
-# numeri_unici.sort(reverse=True)      #ordina i numeri in ordine decrescente
+numeri_unici.sort(reverse=True)      #ordina i numeri in ordine decrescente
 
-# print(f"nuova lista numeri: {numeri_unici}")
+print(f"nuova lista numeri: {numeri_unici}")
 
-# print("nuova lunghezza numeri:", len(numeri_unici))
+print("nuova lunghezza numeri:", len(numeri_unici))
 
 # #punto4
 

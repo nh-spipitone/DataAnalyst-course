@@ -1,0 +1,45 @@
+class Persona:
+    def __init__(self, nome, cognome, eta):
+        self.nome = nome
+        self.cognome = cognome
+        self.eta = eta
+    def saluta(self):
+        print(f"Ciao {self.nome} {self.cognome}")
+    def __str__(self):
+        return f"Nome: {self.nome}\nCognome: {self.cognome}\nEtà: {self.eta}"
+persona = Persona("miao", "metto", 37)
+persona.saluta()
+print(persona)
+
+#-------------------------------------------------------------- Classe con super() sotto
+
+class Veicolo:
+    def __init__(self, marca, modello, anno):
+        self.marca = marca
+        self.modello = modello
+        self.anno = anno
+
+    def info(self):
+        return f"Marca: {self.marca}\nModello: {self.modello}\nAnno: {self.anno}"
+
+class Auto(Veicolo):
+    def __init__(self, marca, modello, anno, porte):
+        super().__init__(marca,modello,anno)
+        self.porte = porte
+
+    def info(self):
+        return f"{super().info()}\nPorte: {self.porte}"
+
+class Moto(Veicolo):
+    def __init__(self, marca, modello, anno, cilindrata):
+        super().__init__(marca,modello,anno)
+        self.cilindrata = cilindrata
+
+    def info(self):
+        return f"{super().info()}\nCilindrata: {self.cilindrata}"
+    
+
+auto = Auto("si", "no", 198, 39)
+moto = Moto("adidas", "ac130", 0, 100000)
+print(auto.info())
+print(moto.info())
