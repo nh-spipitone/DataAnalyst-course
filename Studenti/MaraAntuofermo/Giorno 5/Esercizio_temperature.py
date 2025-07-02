@@ -28,4 +28,4 @@ plt.xlabel("Data", fontsize = 13)
 plt.ylabel("Temperatura", fontsize = 13)
 plt.show()
 
-
+df["Giorno"] = df["Data"].dt.to_period 
