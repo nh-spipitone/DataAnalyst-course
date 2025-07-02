@@ -14,17 +14,17 @@ df.head(6)
 df.dtypes
 print(df)
 
-# print(df[df["Prodotto"] == "B"])
+print(df[df["Prodotto"] == "B"])
 
-# print(df[df["Quantità"] > 100])
+print(df[df["Quantità"] > 100])
 
-# print(df.loc[df["Prodotto"] == "A", ["Mese", "Quantità"]])
+print(df.loc[df["Prodotto"] == "A", ["Mese", "Quantità"]])
 
-# print(df[(df["Prodotto"] == "C") & (df["Quantità"] <= 70)])
+print(df[(df["Prodotto"] == "C") & (df["Quantità"] <= 70)])
 
-# print(df[df["Mese"].isin(["Gen", "Feb"])])
+print(df[df["Mese"].isin(["Gen", "Feb"])])
 
-# print(df[df["Quantità"].between(90,130)])
+print(df[df["Quantità"].between(90,130)])
 
 print(df[df["Mese"] != "Apr"])
 
