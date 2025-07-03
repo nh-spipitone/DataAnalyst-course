@@ -1,0 +1,8 @@
+Ordine_ID,Cliente_ID,Area,Prodotto,Importo
+101,1,Lombardia,Notebook,1200
+102,1,Lombardia,Stampante,300
+103,2,Lazio,Notebook,800
+104,3,Lombardia,Monitor,250
+105,5,Lazio,Tastiera,100
+106,3,Lombardia,Stampante,150
+107,4,Campania,Mouse,50
