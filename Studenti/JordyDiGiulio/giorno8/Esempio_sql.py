@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, text
 
 # Creazione connessione al database
 engine = create_engine(
-    "postgresql+psycopg2://myuser:mypassword@localhost:5432/mydatabase"
+    "postgresql+psycopg2://myuser:mypassword@localhost:5433/mydatabase"
 )
 
 # Creazione tabella da DataFrame
@@ -91,7 +91,7 @@ print(tabella)  # Stampa il contenuto della tabella
 
 
 # # Inserimento dati nel database
-# # df.to_sql("transazioni", engine, if_exists="replace", index=False)
+# df.to_sql("transazioni", engine, if_exists="replace", index=False)
 # # Lettura dati con query SQL
 # query = "SELECT nome, importo FROM transazioni WHERE importo > 1500"
 # risultato = pd.read_sql(query, engine)
