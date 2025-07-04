@@ -14,7 +14,6 @@ engine = create_engine(
 #             lavoro   VARCHAR(50),                          -- lavoro della persona (max 50 caratteri)
 #             salario  NUMERIC(10,2)                         -- salario della persona (max 999)
 
-
 with engine.begin() as conn:
     # ---------- UPDATE -------------------------------------
     conn.execute(
