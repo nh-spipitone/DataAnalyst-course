@@ -91,7 +91,7 @@ print(tabella)  # Stampa il contenuto della tabella
 
 
 # # Inserimento dati nel database
-# # df.to_sql("transazioni", engine, if_exists="replace", index=False)
+# df.to_sql("transazioni", engine, if_exists="replace", index=False)
 # # Lettura dati con query SQL
 # query = "SELECT nome, importo FROM transazioni WHERE importo > 1500"
 # risultato = pd.read_sql(query, engine)
