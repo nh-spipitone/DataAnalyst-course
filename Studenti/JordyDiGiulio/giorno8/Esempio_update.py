@@ -16,15 +16,11 @@ engine = create_engine(
 
 with engine.begin() as conn:
     # ---------- UPDATE -------------------------------------
-    conn.execute(
-        text(
-            """
+    conn.execute(text("""
         UPDATE schiavi
         SET salario = salario *0.8
         where salario >1100
-    """
-        )
-    )
+    """))
 
 variabile = pd.read_sql("SELECT * FROM schiavi", engine)
 print(variabile)  # Stampa il contenuto della tabella dopo l'aggiornamento
