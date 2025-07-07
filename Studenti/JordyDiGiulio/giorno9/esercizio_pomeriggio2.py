@@ -5,7 +5,7 @@ from datetime import date
 
 # 1. Setup
 Base = declarative_base()
-engine = create_engine("sqlite:///:memory:", echo=False)
+engine = create_engine("postgresql+psycopg2://myuser:mypassword@localhost:5432/mydatabase")
 Session = sessionmaker(bind=engine)
 session = Session()
 
