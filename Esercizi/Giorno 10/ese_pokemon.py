@@ -9,9 +9,9 @@ df= pd.read_csv(r"Esercizi\Giorno 10\pokemon_data.csv")
 print(df.head())
 
 df.to_sql("pokemon",engine, if_exists="replace",index=False)
-query="""select types from pokemon where types LIKE '%fire%'"""
-pokemon_tipo_fuoco=pd.read_sql(str(query),engine)
+query=text("select name, types from pokemon where types LIKE '%fire%'")
+pokemon_tipo_fuoco=pd.read_sql(query,engine)
 print(pokemon_tipo_fuoco)
-
+pokemon_tipo_fuoco.to_excel("pokemon_tipo_fuoco.xlsx",index=False)
 
 
