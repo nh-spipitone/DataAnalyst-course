@@ -1,0 +1,64 @@
+from sqlalchemy import create_engine, text
+
+username = "root"
+password = "root"
+host = "localhost"
+port = 3306
+database = "corso_data_analyst"
+
+DATABASE_URL = f"mysql+pymysql://{username}:{password}@{host}:{port}/{database}"
+
+# === Crea motore SQLAlchemy ===
+engine = create_engine(DATABASE_URL)
+
+# === Prova a connetterti e stampare le tabelle ===
+with engine.connect() as conn:
+    result = conn.execute(text("SHOW TABLES;"))
+    tables = result.fetchall()
+    print("Tabelle trovate nel DB:")
+    if not tables:
+        print("Nessuna tabella trovata (il DB è vuoto).")
+    else:
+        for row in tables:
+            print(row[0])
+
+create_table_query = """
+CREATE TABLE IF NOT EXISTS schiavi (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100),
+    eta INT,
+    sesso VARCHAR(10),
+    nazionalita VARCHAR(50),
+    data_nascita DATE,
+    lavoro VARCHAR(100),
+    salario FLOAT
+);
+"""
+
+insert_query = """
+INSERT INTO schiavi (nome, eta, sesso, nazionalita, data_nascita, lavoro, salario) VALUES
+('Anna Bianchi', 28, 'F', 'Italiana', '1996-02-15', 'Designer', 2700.0),
+('Luca Verdi', 35, 'M', 'Italiana', '1989-06-10', 'Ingegnere', 3200.5),
+('Maria Lopez', 40, 'F', 'Spagnola', '1984-09-03', 'Manager', 4500.0);
+"""
+
+with engine.begin() as conn:
+    conn.execute(text(create_table_query))
+    #conn.execute(text(insert_query))
+
+    # === STAMPA I DATI ===
+    result = conn.execute(text("SELECT * FROM schiavi"))
+    print("Dati nella tabella 'schiavi':\n")
+    for row in result:
+        print(row)
+
+with engine.begin() as conn:
+    conn.execute(text("""
+        UPDATE schiavi
+        SET salario = 9999.99
+        WHERE nome = 'Anna Bianchi';
+                      """))
+    conn.execute(text("""
+        DELETE FROM schiavi
+        WHERE nome = 'Luca Verdi';
+                      """))

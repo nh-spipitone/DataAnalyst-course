@@ -1,0 +1,92 @@
+import pandas as pd
+from sqlalchemy import create_engine, text
+
+username = "root"
+password = "root"
+host = "localhost"
+port = 3306
+database = "corso_data_analyst"
+
+DATABASE_URL = f"mysql+pymysql://{username}:{password}@{host}:{port}/{database}"
+engine = create_engine(DATABASE_URL)
+
+# Crea la tabella libri con i campi:
+# Seleziona tutti i libri  disponibili pubblicati dopo il 2003
+
+# create_table_query = """
+# CREATE TABLE IF NOT EXISTS libri (
+#     id INT AUTO_INCREMENT PRIMARY KEY,
+#     titolo VARCHAR(100),
+#     autore VARCHAR(100),
+#     anno_pubblicazione DATE,
+#     disponibile BOOL
+# );
+# """
+
+# insert_query = """
+# INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile) VALUES
+# ('Il nome della rosa', 'Umberto Eco', '1980-10-01', TRUE),
+# ('Cent''anni di solitudine', 'Gabriel García Márquez', '1967-06-05', TRUE),
+# ('1984', 'George Orwell', '1949-06-08', FALSE),
+# ('Orgoglio e pregiudizio', 'Jane Austen', '1813-01-28', TRUE),
+# ('Il grande Gatsby', 'F. Scott Fitzgerald', '1925-04-10', TRUE),
+# ('Moby Dick', 'Herman Melville', '1851-10-18', FALSE),
+# ('Don Chisciotte', 'Miguel de Cervantes', '1605-01-16', TRUE),
+# ('Il processo', 'Franz Kafka', '1925-04-26', FALSE),
+# ('La coscienza di Zeno', 'Italo Svevo', '3000-05-15', TRUE),
+# ('I promessi sposi', 'Alessandro Manzoni', '1827-01-01', TRUE);
+# """
+# insert_query2 = """
+# INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile) VALUES
+# ('La vita bugiarda degli adulti', 'Elena Ferrante', '2020-01-07', TRUE),
+# ('Klara e il Sole', 'Kazuo Ishiguro', '2021-03-02', TRUE),
+# ('Il colibrì', 'Sandro Veronesi', '2019-10-15', TRUE);
+# """
+# with engine.begin() as conn:
+#     conn.execute(text(create_table_query))
+#     conn.execute(text(insert_query))
+#     df_bassi = pd.read_sql_query("SELECT * FROM libri WHERE disponibile=TRUE AND anno_pubblicazione>'2010-01-01'", conn)
+#     print("libri:")
+#     print(df_bassi)
+#     conn.execute(text("UPDATE libri SET disponibile=TRUE WHERE titolo = '1984'"))
+#     conn.execute(text("DELETE FROM libri WHERE anno_pubblicazione<'2000-01-01'"))
+#     conn.execute(text(insert_query2))
+#     df_bassi = pd.read_sql_query("SELECT * FROM libri WHERE disponibile=TRUE AND anno_pubblicazione>'2003-01-01'", conn)
+#     print("libri:")
+#     print(df_bassi)
+
+# cambia lo stipendio e settalo a 2000 , su tutti gli assunti prima del 2020
+# Mostra i dipendenti con stipendio sopra la media generale
+
+create_table_query = """
+CREATE TABLE IF NOT EXISTS impiegati (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100),
+    dipartimento VARCHAR(100),
+    stipendio INT,
+    data_assunzione DATE
+);
+"""
+
+insert_query = """
+INSERT INTO impiegati (nome, dipartimento, stipendio, data_assunzione) VALUES
+('Luca Bianchi', 'Ingegneria', 3200, '2015-06-01'),
+('Maria Rossi', 'Marketing', 2800, '2018-09-15'),
+('Giovanni Verdi', 'Risorse Umane', 2500, '2020-03-01'),
+('Sara Neri', 'Finanza', 4000, '2012-11-23'),
+('Paolo Gialli', 'Informatica', 3500, '2021-01-10'),
+('Anna Blu', 'Logistica', 2700, '2016-05-20'),
+('Marco Viola', 'Vendite', 3000, '2019-08-05'),
+('Elena Grigi', 'Assistenza Clienti', 2400, '2022-02-18');
+"""
+
+with engine.begin() as conn:
+    conn.execute(text(create_table_query))
+    conn.execute(text(insert_query))
+    df_bassi = pd.read_sql_query("SELECT dipartimento, AVG(stipendio) AS media_stipendio FROM impiegati GROUP BY dipartimento", conn)
+    print("stipendio media:")
+    print(df_bassi)
+    conn.execute(text("UPDATE impiegati SET stipendio=2000 WHERE data_assunzione<'2020-01-01'"))
+    df_bassi = pd.read_sql_query("SELECT nome FROM impiegati WHERE stipendio>(SELECT AVG(stipendio) from impiegati)", conn)
+    print("sopra la media:")
+    print(df_bassi)
