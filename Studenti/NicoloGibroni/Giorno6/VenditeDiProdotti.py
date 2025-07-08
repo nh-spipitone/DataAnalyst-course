@@ -50,3 +50,4 @@ axes[1].scatter(dataframe_filtro["Mese"], dataframe_filtro["Quantità"])
 
 plt.tight_layout()
 plt.show()
+
