@@ -17,10 +17,10 @@ vendite_data = [
 df = pd.DataFrame(vendite_data)
 df.to_sql("vendite", engine, if_exists="replace", index=False)
 
-query = text("""  # triple quotes escaped inside python string
+query = text(""" 
     SELECT autore,
            SUM(quantita)                          AS copie_totali,
-           ROUND(SUM(quantita * prezzo_unitario), 2) AS ricavo_totale
+           ROUND(SUM(quantita * prezzo_unitario)::numeric, 2) AS ricavo_totale
     FROM vendite
     GROUP BY autore
     ORDER BY ricavo_totale DESC;
@@ -32,7 +32,7 @@ print(risultato)
 top_3_autori_query = text(""" 
     SELECT autore, SUM(quantita) AS copie_totali FROM vendite GROUP BY autore ORDER BY copie_totali DESC LIMIT 3;""")
                            
-top_3_autori = pd.read_sql(top_3_autori_query), engine
+top_3_autori = pd.read_sql(top_3_autori_query, engine)
 print(top_3_autori)
 
 ricavo_mensile_query = text("""
