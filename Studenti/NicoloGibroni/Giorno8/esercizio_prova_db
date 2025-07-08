@@ -1,0 +1,221 @@
+import pandas as pd
+from sqlalchemy import create_engine, text
+
+username = "root"
+password = "root"
+host = "localhost"
+port = 3306
+database = "corso_data_analyst"
+
+DATABASE_URL = f"mysql+pymysql://{username}:{password}@{host}:{port}/{database}"
+
+# Crea un DataFrame chiamato corsi con colonne:
+# id
+# nome_corso
+# crediti
+# E salvalo nel database come tabella corsi.
+# Aggiungi un nuovo corso alla tabella corsi:
+# id: 104
+# nome: "Chimica"
+# crediti: 7
+# Seleziona tutti i corsi che hanno più di 7 crediti.
+
+# === Crea motore SQLAlchemy ===
+engine = create_engine(DATABASE_URL)
+
+# === Prova a connetterti e stampare le tabelle ===
+# create_table_query = """
+# CREATE TABLE IF NOT EXISTS corsi (
+#     id INT AUTO_INCREMENT PRIMARY KEY,
+#     nome_corso VARCHAR(100),
+#     crediti INT
+# );
+# """
+
+# insert_query = """
+# INSERT INTO corsi (id, nome_corso, crediti) VALUES
+# (104, 'Chimica', 7)
+# """
+
+# with engine.begin() as conn:
+#     conn.execute(text(create_table_query))
+#     conn.execute(text(insert_query))
+
+#     # === STAMPA I DATI ===
+#     result = conn.execute(text("SELECT * FROM corsi"))
+#     print("Dati nella tabella 'corsi':\n")
+#     for row in result:
+#         print(row)
+
+
+# --------------------------
+# LUTZ01 — 14:37
+# ESERCIZIO:Crea una tabella con questi campi:
+
+# id
+
+# nome
+
+# dipartimento
+
+# stipendio
+
+# E inserisci 4 dipendenti. POI Aggiorna lo stipendio di un dipendente a 2300 euro.
+# POI Elimina i dipendenti del dipartimento "IT" che hanno uno stipendio superiore a 2100.
+# INFINE trova tutti i dipendenti con uno stipendio minore a 1000.
+
+# create_table_query = """
+# CREATE TABLE IF NOT EXISTS dipendenti (
+#     id INT AUTO_INCREMENT PRIMARY KEY,
+#     nome VARCHAR(100),
+#     dipartimento VARCHAR(100),
+#     stipendio INT
+# );
+# """
+
+# insert_query = """
+# INSERT INTO dipendenti (nome, dipartimento, stipendio) VALUES
+# ('Marco Rossi', 'Ingegneria', 800),
+# ('Giulia Verdi', 'Marketing', 2500),
+# ('Luca Bianchi', 'IT', 3000),
+# ('Elena', 'Risorse Umane', 2700)
+# """
+
+# with engine.begin() as conn:
+#     conn.execute(text(create_table_query))
+#     conn.execute(text(insert_query))
+#     conn.execute(text("UPDATE dipendenti SET stipendio = 2300 WHERE nome = 'Elena'"))
+#     conn.execute(text("DELETE FROM dipendenti WHERE dipartimento = 'IT' AND stipendio > 2100"))
+#     df_bassi = pd.read_sql_query("SELECT nome FROM dipendenti WHERE stipendio < 1000", conn)
+#     print("Dipendenti con stipendio inferiore a 1000 euro:")
+#     print(df_bassi)
+
+# 1.Crea una tabella prodotti con i campi:
+
+# id
+
+# nome
+
+# prezzo
+
+# categoria
+
+# e crea almeno 10 prodotti
+# create_table_query = """
+# CREATE TABLE IF NOT EXISTS prodotti (
+#     id INT AUTO_INCREMENT PRIMARY KEY,
+#     nome VARCHAR(100),
+#     prezzo INT,
+#     categoria VARCHAR(100)
+# );
+# """
+
+# insert_query = """
+# INSERT INTO prodotti (nome, prezzo, categoria) VALUES
+# ('Laptop HP', 800, 'Elettronica'),
+# ('Smartphone Samsung', 600, 'Elettronica'),
+# ('Tastiera Meccanica', 120, 'Accessori'),
+# ('Cuffie Bluetooth', 150, 'Accessori'),
+# ('Mouse Logitech', 70, 'Accessori'),
+# ('Monitor 24 pollici', 200, 'Elettronica'),
+# ('Zaino porta PC', 2, 'Accessori'),
+# ('Stampante Canon', 130, 'Elettronica'),
+# ('Hard Disk Esterno', 1, 'Memoria'),
+# ('Router Wi-Fi', 85, 'Networking');
+# """
+
+# with engine.begin() as conn:
+#     conn.execute(text(create_table_query))
+#     # conn.execute(text(insert_query))
+#     conn.execute(text("UPDATE prodotti SET prezzo = 18 WHERE nome = 'Laptop HP'"))
+#     conn.execute(text("DELETE FROM prodotti WHERE prezzo < 2"))
+#     df_bassi = pd.read_sql_query("SELECT * FROM prodotti WHERE prezzo > 10 AND categoria = 'Elettronica'", conn)
+#     print("prodotti scelti:")
+#     print(df_bassi)
+
+# create_table_query = """
+# CREATE TABLE IF NOT EXISTS ordini (
+#     id INT AUTO_INCREMENT PRIMARY KEY,
+#     cliente VARCHAR(100),
+#     prodotto VARCHAR(100),
+#     quantita INT,
+#     prezzo_unitario INT
+# );
+# """
+
+# insert_query = """
+# INSERT INTO ordini (cliente, prodotto, quantita, prezzo_unitario) VALUES
+# ('Mario Rossi', 'Laptop HP', 1, 800),
+# ('Luca Verdi', 'Cuffie Bluetooth', 2, 150),
+# ('Anna Bianchi', 'Smartphone Samsung', 1, 600),
+# ('Giulia Neri', 'Zaino porta PC', 6, 90),
+# ('Paolo Gialli', 'Hard Disk Esterno', 3, 100),
+# ('Sara Blu', 'Tastiera Meccanica', 1, 120),
+# ('Franco Viola', 'Monitor 24 pollici', 2, 200),
+# ('Lucia Rosa', 'Mouse Logitech', 2, 70),
+# ('Davide Arancio', 'Router Wi-Fi', 1, 1),
+# ('Irene Azzurra', 'Stampante Canon', 1, 130);
+# """
+
+# with engine.begin() as conn:
+#     conn.execute(text(create_table_query))
+#     conn.execute(text(insert_query))
+#     conn.execute(text("UPDATE ordini SET prezzo_unitario = 1 WHERE quantita > 5"))
+#     conn.execute(text("DELETE FROM ordini WHERE (quantita * prezzo_unitario) < 5"))
+#     df_bassi = pd.read_sql_query("SELECT cliente, SUM(quantita * prezzo_unitario) AS totale_spesa FROM ordini GROUP BY cliente HAVING totale_spesa > 10", conn)
+#     print("ordini scelti:")
+#     print(df_bassi)
+# --------------------------------------
+
+create_table_query = """
+CREATE TABLE IF NOT EXISTS voti (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    studente VARCHAR(100),
+    materia VARCHAR(100),
+    voto INT
+);
+"""
+
+insert_query = """
+INSERT INTO voti (studente, materia, voto) VALUES
+('Marco Rossi', 'Matematica', 28),
+('Giulia Verdi', 'Fisica', 30),
+('Luca Neri', 'Chimica', 24),
+('Elena Bianchi', 'Storia', 27),
+('Francesco Blu', 'Informatica', 30),
+('Anna Viola', 'Letteratura', 26),
+('Giovanni Gialli', 'Matematica', 18),
+('Sofia Rosa', 'Fisica', 22),
+('Paolo Marrone', 'Storia', 25),
+('Chiara Azzurri', 'Chimica', 29);
+"""
+
+dati_nascita = [
+    ("Marco Rossi", '2010-05-12'),
+    ("Giulia Verdi", '2010-11-23'),
+    ("Luca Neri", '2010-08-14'),
+    ("Elena Bianchi", '2010-03-03'),
+    ("Francesco Blu", '2010-07-27'),
+    ("Anna Viola", '2010-01-10'),
+    ("Giovanni Gialli", '2010-12-31'),
+    ("Sofia Rosa", '2010-06-06'),
+    ("Paolo Marrone", '2010-09-19'),
+    ("Chiara Azzurri", '2010-04-21'),
+]
+
+
+with engine.begin() as conn:
+    conn.execute(text(create_table_query))
+    conn.execute(text(insert_query))
+    conn.execute(text("UPDATE voti SET voto = 1 WHERE materia = 'Fisica' AND studente = 'Giulia Verdi'"))
+    conn.execute(text("ALTER TABLE voti ADD data_nascita DATE;"))
+    for nome, data in dati_nascita:
+        conn.execute(text(f"UPDATE voti SET data_nascita = '{data}' WHERE studente = '{nome}'"))
+    df_bassi = pd.read_sql_query("SELECT studente, AVG(voto) AS media_voti FROM voti GROUP BY studente HAVING media_voti >= 6", conn)
+    print("voti media suff:")
+    print(df_bassi)
+    df_bassi = pd.read_sql_query("SELECT studente, AVG(voto) AS media_voti FROM voti WHERE data_nascita > '2005-01-01' GROUP BY studente HAVING media_voti >= 4", conn)
+    print("voti media > 4 e anno > 2005:")
+    print(df_bassi)
+
+    
