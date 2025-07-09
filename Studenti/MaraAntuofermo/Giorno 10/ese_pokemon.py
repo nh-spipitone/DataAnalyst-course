@@ -5,7 +5,7 @@ from sqlalchemy import (
 )  # Importa funzioni per collegarsi a un database SQL
 
 engine = create_engine(
-    "postgresql+psycopg2://myuser:mypassword@localhost:5433/mydatabase"
+    "postgresql+psycopg2://myuser:mypassword@localhost:5432/mydatabase"
 )  # Crea una connessione al database PostgreSQL
 
 
@@ -46,7 +46,7 @@ def search_pokemon_by_name(name, engine):
 
 
 df = pd.read_csv(
-    r"Esercizi\Giorno 10\pokemon_data.csv"
+    r"DataAnalyst-course/Studenti/MaraAntuofermo/Giorno 10/pokemon_data.csv"
 )  # Legge il file CSV con i dati dei Pokémon
 df = split_stats_columns(
     df
