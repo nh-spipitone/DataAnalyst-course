@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt  # Importa matplotlib per la visualizzazione gra
 
 
 df_salary = pd.read_csv(
-    r"Esercizi\Giorno 12\Salary_dataset.csv"
+    r"DataAnalyst-course/Studenti/MaraAntuofermo/Giorno 12/Salary_dataset.csv"
 )  # Legge il file CSV in un DataFrame
 
 print(df_salary.head())  # Mostra le prime righe del DataFrame per verifica
