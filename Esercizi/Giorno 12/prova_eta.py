@@ -13,15 +13,28 @@ slope, intercept, r_value, p_value, std_err = stats.linregress(
     età, velocità
 )  # Calcola i parametri della retta di regressione
 
-# mostra i risultati in un grafico plot
+# Creazione della linea di regressione
+linea_regressione = (
+    intercept + slope * età
+)  # Calcola i valori della retta di regressione per ogni età
+
+# Visualizzazione
+plt.figure(figsize=(10, 6))  # Crea una nuova figura con dimensioni specificate
 plt.scatter(
-    età, velocità, color="blue", label="Dati"
-)  # Crea un grafico a dispersione dei dati
+    età, velocità, color="blue", label="Dati osservati"
+)  # Crea uno scatter plot dei dati osservati
 plt.plot(
-    età, slope * età + intercept, color="red", label="Regressione Lineare"
-)  # Disegna la retta di regressione
-plt.xlabel("Età")  # Etichetta asse x
-plt.ylabel("Velocità")  # Etichetta asse y
-plt.title("Regressione Lineare tra Età e Velocità")  # Titolo del grafico
+    età,
+    linea_regressione,
+    color="red",
+    label=f"Linea di regressione (y={intercept:.2f}+{slope:.2f}x)",
+)  # Disegna la linea di regressione sui dati
+plt.title("Relazione tra Età e Velocità di Corsa")  # Imposta il titolo del grafico
+plt.xlabel("Età (anni)")  # Imposta l'etichetta dell'asse x
+plt.ylabel("Velocità (km/h)")  # Imposta l'etichetta dell'asse y
 plt.legend()  # Mostra la legenda
+plt.grid(True)  # Mostra la griglia sul grafico
 plt.show()  # Visualizza il grafico
+
+# Coefficiente di determinazione
+print(f"R²: {r_value**2:.3f}")  # Stampa il coefficiente di determinazione R²
