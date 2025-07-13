@@ -1,0 +1,195 @@
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+from sklearn.preprocessing import StandardScaler
+import warnings
+warnings.filterwarnings('ignore')
+
+# Configurazione per grafici più belli
+plt.style.use('seaborn-v0_8')
+sns.set_palette("husl")
+
+# 1. CREAZIONE DEL DATASET DI ESEMPIO
+# Simuliamo il dataset Auto MPG con caratteristiche realistiche
+np.random.seed(42)
+n_samples = 300
+
+# Generiamo dati correlati realisticamente
+horsepower = np.random.normal(120, 40, n_samples)
+horsepower = np.clip(horsepower, 50, 300)
+
+weight = np.random.normal(3000, 600, n_samples)
+weight = np.clip(weight, 1800, 5000)
+
+acceleration = np.random.normal(15, 3, n_samples)
+acceleration = np.clip(acceleration, 8, 25)
+
+# MPG inversamente correlato a horsepower e weight, positivamente ad acceleration
+mpg = (40 - 0.08 * horsepower - 0.005 * weight + 0.3 * acceleration + 
+       np.random.normal(0, 2, n_samples))
+mpg = np.clip(mpg, 10, 45)
+
+# Creazione del DataFrame
+df = pd.DataFrame({
+    'mpg': mpg,
+    'horsepower': horsepower,
+    'weight': weight,
+    'acceleration': acceleration
+})
+
+print("🚗 DATASET AUTO MPG - REGRESSIONE LINEARE MULTIPLA")
+print("="*60)
+print(f"Dimensioni dataset: {df.shape}")
+print("\nPrime 5 righe:")
+print(df.head())
+print("\nStatistiche descrittive:")
+print(df.describe().round(2))
+
+# 2. ANALISI ESPLORATIVA E MATRICE DI CORRELAZIONE
+fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+fig.suptitle('Analisi Esplorativa dei Dati', fontsize=16, fontweight='bold')
+
+# Matrice di correlazione
+corr_matrix = df.corr()
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', center=0, 
+            square=True, ax=axes[0,0], cbar_kws={'label': 'Correlazione'})
+axes[0,0].set_title('Matrice di Correlazione', fontweight='bold')
+
+# Scatter plot: MPG vs Horsepower
+axes[0,1].scatter(df['horsepower'], df['mpg'], alpha=0.6, color='red')
+axes[0,1].set_xlabel('Horsepower')
+axes[0,1].set_ylabel('MPG')
+axes[0,1].set_title('MPG vs Horsepower')
+axes[0,1].grid(True, alpha=0.3)
+
+# Scatter plot: MPG vs Weight
+axes[1,0].scatter(df['weight'], df['mpg'], alpha=0.6, color='blue')
+axes[1,0].set_xlabel('Weight (lbs)')
+axes[1,0].set_ylabel('MPG')
+axes[1,0].set_title('MPG vs Weight')
+axes[1,0].grid(True, alpha=0.3)
+
+# Scatter plot: MPG vs Acceleration
+axes[1,1].scatter(df['acceleration'], df['mpg'], alpha=0.6, color='green')
+axes[1,1].set_xlabel('Acceleration (sec 0-60)')
+axes[1,1].set_ylabel('MPG')
+axes[1,1].set_title('MPG vs Acceleration')
+axes[1,1].grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+
+# 3. PREPARAZIONE DEI DATI
+# Variabili indipendenti (features)
+X = df[['horsepower', 'weight', 'acceleration']]
+# Variabile dipendente (target)
+y = df['mpg']
+
+# Divisione train/test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+print(f"\n📊 DIVISIONE DEI DATI:")
+print(f"Training set: {X_train.shape[0]} campioni")
+print(f"Test set: {X_test.shape[0]} campioni")
+
+# 4. CREAZIONE E ADDESTRAMENTO DEL MODELLO
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predizioni
+y_pred_train = model.predict(X_train)
+y_pred_test = model.predict(X_test)
+
+# 5. VALUTAZIONE DEL MODELLO
+print(f"\n🎯 PRESTAZIONI DEL MODELLO:")
+print("="*40)
+print(f"R² Score (Train): {r2_score(y_train, y_pred_train):.4f}")
+print(f"R² Score (Test): {r2_score(y_test, y_pred_test):.4f}")
+print(f"MSE (Test): {mean_squared_error(y_test, y_pred_test):.4f}")
+print(f"MAE (Test): {mean_absolute_error(y_test, y_pred_test):.4f}")
+print(f"RMSE (Test): {np.sqrt(mean_squared_error(y_test, y_pred_test)):.4f}")
+
+# Coefficienti del modello
+print(f"\n📈 COEFFICIENTI DEL MODELLO:")
+print(f"Intercetta: {model.intercept_:.4f}")
+for feature, coef in zip(X.columns, model.coef_):
+    print(f"{feature}: {coef:.4f}")
+
+# 6. VISUALIZZAZIONE DEI RISULTATI
+fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+fig.suptitle('Risultati della Regressione Lineare Multipla', fontsize=16, fontweight='bold')
+
+# Grafico 1: Valori Predetti vs Valori Reali
+axes[0,0].scatter(y_test, y_pred_test, alpha=0.6, color='blue')
+axes[0,0].plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--', lw=2)
+axes[0,0].set_xlabel('Valori Reali (MPG)')
+axes[0,0].set_ylabel('Valori Predetti (MPG)')
+axes[0,0].set_title('Predetti vs Reali')
+axes[0,0].grid(True, alpha=0.3)
+
+# Grafico 2: Residui
+residuals = y_test - y_pred_test
+axes[0,1].scatter(y_pred_test, residuals, alpha=0.6, color='green')
+axes[0,1].axhline(y=0, color='red', linestyle='--')
+axes[0,1].set_xlabel('Valori Predetti (MPG)')
+axes[0,1].set_ylabel('Residui')
+axes[0,1].set_title('Grafico dei Residui')
+axes[0,1].grid(True, alpha=0.3)
+
+# Grafico 3: Distribuzione dei Residui
+axes[1,0].hist(residuals, bins=20, alpha=0.7, color='orange', edgecolor='black')
+axes[1,0].set_xlabel('Residui')
+axes[1,0].set_ylabel('Frequenza')
+axes[1,0].set_title('Distribuzione dei Residui')
+axes[1,0].grid(True, alpha=0.3)
+
+# Grafico 4: Importanza delle Features (Coefficienti)
+features = X.columns
+coefficients = model.coef_
+colors = ['red' if c < 0 else 'blue' for c in coefficients]
+bars = axes[1,1].bar(features, coefficients, color=colors, alpha=0.7)
+axes[1,1].set_ylabel('Coefficienti')
+axes[1,1].set_title('Importanza delle Features')
+axes[1,1].grid(True, alpha=0.3)
+# Aggiungi etichette sui bar
+for bar, coef in zip(bars, coefficients):
+    height = bar.get_height()
+    axes[1,1].text(bar.get_x() + bar.get_width()/2., height,
+                   f'{coef:.3f}', ha='center', va='bottom' if height > 0 else 'top')
+
+plt.tight_layout()
+plt.show()
+
+# 7. INTERPRETAZIONE DEI RISULTATI
+print(f"\n🔍 INTERPRETAZIONE DEI RISULTATI:")
+print("="*50)
+print("Matrice di Correlazione:")
+print(corr_matrix.round(3))
+print("\nInterpretazione dei coefficienti:")
+for feature, coef in zip(X.columns, model.coef_):
+    if coef < 0:
+        print(f"• {feature}: {coef:.4f} → Effetto NEGATIVO su MPG")
+    else:
+        print(f"• {feature}: {coef:.4f} → Effetto POSITIVO su MPG")
+
+print(f"\nL'equazione del modello è:")
+eq = f"MPG = {model.intercept_:.2f}"
+for feature, coef in zip(X.columns, model.coef_):
+    eq += f" + ({coef:.4f} × {feature})"
+print(eq)
+
+# 8. ESEMPIO DI PREVISIONE
+print(f"\n🎯 ESEMPIO DI PREVISIONE:")
+print("="*30)
+esempio = [[150, 3000, 12]]  # horsepower, weight, acceleration
+predizione = model.predict(esempio)
+print(f"Auto con:")
+print(f"  - Horsepower: {esempio[0][0]}")
+print(f"  - Weight: {esempio[0][1]} lbs")
+print(f"  - Acceleration: {esempio[0][2]} sec")
+print(f"  → MPG previsto: {predizione[0]:.2f}")
