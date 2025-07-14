@@ -1,2 +1,31 @@
+<<<<<<< HEAD
+Studenti/Stefano Moretti/Lezioni/Giorno 7/vendite.csv
+Studenti/Stefano Moretti/Lezioni/Giorno 12/Student_Performance.csv
+Studenti/Stefano Moretti/Lezioni/Giorno 14/.env
+Studenti/Stefano Moretti/Lezioni/Giorno 12/linear_regression_dataset.csv
+Studenti/Stefano Moretti/Lezioni/Giorno 12/iris_dataset.csv
+Studenti/Stefano Moretti/Lezioni/Giorno 12/dataset_regressione.csv
+.gitignore
+Studenti/Stefano Moretti/Esercizi/Giorno 9/libri.db
+Studenti/Stefano Moretti/Esercizi/Giorno 9/ordini_marketplace.db
+Studenti/Stefano Moretti/Esercizi/Giorno 9/azienda_dipendenti_aggiornato.db
+Studenti/Stefano Moretti/Esercizi/Giorno 7/voti.csv
+Studenti/Stefano Moretti/Esercizi/Giorno 7/sales_sample.csv
+Studenti/Stefano Moretti/Esercizi/Giorno 6/titanic-1.csv
+Studenti/Stefano Moretti/Esercizi/Giorno 6/Sleep_health_and_lifestyle_dataset.csv
+Studenti/Stefano Moretti/Esercizi/Giorno 6/googleplaystore.csv
+Studenti/Stefano Moretti/Esercizi/Giorno 5/titanic.csv
+Studenti/Stefano Moretti/Esercizi/Giorno 5/temperature.csv
+Studenti/Stefano Moretti/Esercizi/Giorno 5/sales.csv
+Studenti/Stefano Moretti/Esercizi/Giorno 5/ordini_amazon.csv
+Studenti/Stefano Moretti/Esercizi/Giorno 10/pokemon.db
+Studenti/Stefano Moretti/Esercizi/Giorno 10/pokemon_tipo_fuoco.xlsx
+Studenti/Stefano Moretti/Esercizi/Giorno 10/pokemon_data.csv
+Esercizi/Giorno 11/pokedex_prima_gen.csv
+.gitignore
+=======
 /venv/
 .env
+>>>>>>> ea02bfa3e29e228fdd7a442c72b709ab0d0783d7
+Esercizi/Giorno 13/CarPrice_Assignment.csv
+Esercizi/Giorno 13/dataset_case.csv

@@ -63,7 +63,7 @@ tools = [
 
 # Richiesta al modello OpenAI con strumenti abilitati
 response = client.chat.completions.create(
-    model="gpt-4.1-2025-04-14",  # Specifica il modello da utilizzare
+    model="gpt-4.1",  # Specifica il modello da utilizzare
     messages=[
         {
             "role": "user",  # Ruolo del messaggio: utente
