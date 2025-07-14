@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Studenti/Stefano Moretti/Lezioni/Giorno 7/vendite.csv
 Studenti/Stefano Moretti/Lezioni/Giorno 12/Student_Performance.csv
 Studenti/Stefano Moretti/Lezioni/Giorno 14/.env
@@ -22,3 +23,9 @@ Studenti/Stefano Moretti/Esercizi/Giorno 10/pokemon_tipo_fuoco.xlsx
 Studenti/Stefano Moretti/Esercizi/Giorno 10/pokemon_data.csv
 Esercizi/Giorno 11/pokedex_prima_gen.csv
 .gitignore
+=======
+/venv/
+.env
+>>>>>>> ea02bfa3e29e228fdd7a442c72b709ab0d0783d7
+Esercizi/Giorno 13/CarPrice_Assignment.csv
+Esercizi/Giorno 13/dataset_case.csv
