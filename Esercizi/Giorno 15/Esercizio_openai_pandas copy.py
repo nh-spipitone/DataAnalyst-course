@@ -7,10 +7,6 @@ from dotenv import (
     load_dotenv,
 )  # Importa load_dotenv per caricare variabili d'ambiente da un file .env
 import os  # Importa os per interagire con il sistema operativo
-import seaborn as sns  # Importa seaborn per la visualizzazione dei dati (non usato nel codice)
-from io import (
-    StringIO,
-)  # Importa StringIO per gestire stringhe come file (non usato nel codice)
 
 # Carica le variabili d'ambiente dal file .env
 load_dotenv()
@@ -136,7 +132,7 @@ def create_plot(
             elif no_df and x_column and y_column:
                 plt.plot(
                     x_column, y_column, marker="o", linewidth=2, markersize=8
-                )  # Crea un grafico a linea
+                )  # Crea un grafico a linea con dati personalizzati
                 plt.xlabel(x_label)
                 plt.ylabel(y_label)
                 plt.title(title)
@@ -147,7 +143,7 @@ def create_plot(
                     f"grafico_linea_{x_column}_{y_column}.png",
                     dpi=300,
                     bbox_inches="tight",
-                )  # Salva il grafico come file PNG
+                )
                 plt.show()
                 return f"Grafico a linea creato: {x_label} vs {x_column}"
             elif not y_column and x_column and no_df:
@@ -188,7 +184,7 @@ def create_plot(
             elif no_df and x_column and y_column:
                 plt.bar(
                     x_column, y_column, color="skyblue", alpha=0.7
-                )  # Crea un grafico a barre
+                )  # Crea un grafico a barre con dati personalizzati
                 plt.xlabel(x_label)
                 plt.ylabel(y_label)
                 plt.title(title)
@@ -254,7 +250,7 @@ def create_plot(
             elif no_df and x_column and y_column:
                 plt.scatter(
                     x_column, y_column, alpha=0.6, s=100
-                )  # Crea uno scatter plot
+                )  # Crea uno scatter plot con dati personalizzati
                 plt.xlabel(x_label)
                 plt.ylabel(y_label)
                 plt.title(title)
