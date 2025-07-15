@@ -7,10 +7,6 @@ from dotenv import (
     load_dotenv,
 )  # Importa load_dotenv per caricare variabili d'ambiente da un file .env
 import os  # Importa os per interagire con il sistema operativo
-import seaborn as sns  # Importa seaborn per la visualizzazione dei dati (non usato nel codice)
-from io import (
-    StringIO,
-)  # Importa StringIO per gestire stringhe come file (non usato nel codice)
 
 # Carica le variabili d'ambiente dal file .env
 load_dotenv()
