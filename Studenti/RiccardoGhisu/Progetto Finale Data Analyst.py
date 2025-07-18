@@ -379,6 +379,7 @@ print(durata_media_dei_viaggi_per_mezzo_di_trasporto)
     #-destinazione
     #-nazionalità
     #-genere del viaggiatore
+    #-Accommodation cost
 
 
 
@@ -394,7 +395,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split 
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error 
-
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 
 #4.2 Creazione della colonna "Season":
@@ -418,34 +419,34 @@ df['Season'] = df['Start date'].apply(get_season)
 
 
 
-#Codifica delle variabili categoriche:
+X = df[
+    [
+        "Duration (days)",
+        "Season",
+        "Destination",
+        "Transportation type",   
+    ]
+]
 
-df_encoded = pd.get_dummies(df, columns=[       #get_dummies: funzione per trasformare le variabili categoriche in variabili numeriche con one-hot encoding
-    'Season',
-    'Destination',
-    'Traveler nationality',
-    'Traveler gender'
-], drop_first=True)                              #drop_first: per rimuovere la colonna di riferimento
-
-
-
-
-
-#4.3 Selezione delle feature:
-
-# Selezioniamo tutte le colonne numeriche + quelle codificate
-
-features = ['Duration (days)', 'Traveler age'] + \
-           [col for col in df_encoded.columns if col.startswith(('Season_', 'Destination_', 'Traveler nationality_', 'Traveler gender_'))]
-
-X = df_encoded[features]              # Variabili indipendenti
-y = df['Costo totale']         # Variabile dipendente da predire
+# Identifichiamo le colonne numeriche e categoriche PRIMA della codifica
+categorical_features = X.select_dtypes(include=["object"]).columns.tolist()
 
 
+print(f"Features categoriche: {categorical_features}")
 
 
+X_processed = X.copy()
 
-#4.4 Suddivisione dei dati:
+
+label_encoders = {}
+
+for feature in categorical_features:
+    le = LabelEncoder()
+    X_processed[feature] = le.fit_transform(X_processed[feature])
+    label_encoders[feature] = le
+
+
+y = df["Transportation cost"]  # Variabile dipendente da predire
 
 
 # Suddividiamo il dataset in training (80%) e test (20%):
@@ -454,63 +455,58 @@ X_train, X_test, y_train, y_test = train_test_split(
           X, y, test_size=0.2, random_state=42
 )
 
+# 4.4.1 Normalizzazione delle features con StandardScaler:
 
 
 
-#4.5 Creazione e addestramento del modello:
+# 4.5 Creazione e addestramento del modello:
 
-model = LinearRegression()                      # Creiamo il modello di regressione lineare
+model = LinearRegression()  # Creiamo il modello di regressione lineare
 
-model.fit(X_train, y_train)                     # Alleniamo il modello sui dati di training
+model.fit(
+    X_train, y_train
+)  # Alleniamo il modello sui dati di training normalizzati
 
-print("Modello addestrato con successo!")
-
-
-
-#4.6 
+print("Modello addestrato con successo sui dati normalizzati!")
 
 
 
-# Previsioni sui dati di test
+
+
+
+
+
+
+# 4.6
+
+
+# Previsioni sui dati di test normalizzati
 y_pred = model.predict(X_test)
 
 
+print("Valutazione del modello:")
+
+print("RMSE", np.sqrt(mean_squared_error(y_test, y_pred)))  # Calcola la radice quadrata dell'errore quadratico medio
+print("MAE", mean_absolute_error(y_test, y_pred))  # Calcola l'errore assoluto medio
+print("R2", r2_score(y_test, y_pred))  # Calcola il coefficiente di determinazione
 
 
-print("Valutazione del modello:")                              
-print("RMSE", np.sqrt(mean_squared_error(y_test, y_pred)))     # Calcola la radice quadrata dell'errore quadratico medio
-print("MAE", mean_absolute_error(y_test, y_pred))              # Calcola l'errore assoluto medio
-print("R2", r2_score(y_test, y_pred))                          # Calcola il coefficiente di determinazione
-
-
-
-
-features= X.columns
+features = X_processed.columns
 coefficients = model.coef_
 intercept = model.intercept_
 
-print(f"Intercetta: {intercept:.2f} $")   #Stampa l'intercetta
+print(f"Intercetta: {intercept:.2f} $")  # Stampa l'intercetta
 
 
+for feature, coef in zip(
+    features, coefficients
+):  # Cicla sulle colonne e sui coefficienti
+    print(
+        f"Coefficiente per {feature}: {coef:.2f} $ per unità"
+    )  # Stampa il coefficiente per ogni colonna
 
-
-for feature, coef in zip(features, coefficients):                      # Cicla sulle colonne e sui coefficienti
-    print (f"Coefficiente per {feature}: {coef:.2f} $ per unità")      # Stampa il coefficiente per ogni colonna
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Nota: I coefficienti per le features numeriche normalizzate rappresentano
+# l'impatto di una deviazione standard sulla variabile target
 
 
 
