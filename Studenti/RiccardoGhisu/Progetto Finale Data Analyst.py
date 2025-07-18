@@ -372,14 +372,12 @@ print(durata_media_dei_viaggi_per_mezzo_di_trasporto)
         #-Regressione Lineare Multipla (più variabili)
 
 
-#Prevedere il costo totale del viaggio in base a:
-    #-durata del viaggio
-    #-età del viaggiatore
-    #-stagione del viaggio
-    #-destinazione
-    #-nazionalità
-    #-genere del viaggiatore
-    #-Accommodation cost
+#Prevedere il costo dei trasporti del viaggio in base a:
+        #-"Duration (days)",
+        #-"Season",
+        #"Destination",
+        #"Transportation type",
+        #"Accommodation cost",
 
 
 
@@ -414,9 +412,9 @@ def get_season(date):
     else:
         return 'Autumn'
 
+
 # Applica la funzione
 df['Season'] = df['Start date'].apply(get_season)
-
 
 
 X = df[
@@ -424,18 +422,17 @@ X = df[
         "Duration (days)",
         "Season",
         "Destination",
-        "Transportation type",   
+        "Transportation type",
+        "Accommodation cost",   
     ]
 ]
 
-# Identifichiamo le colonne numeriche e categoriche PRIMA della codifica
+# Identifichiamo le categoriche PRIMA della codifica
 categorical_features = X.select_dtypes(include=["object"]).columns.tolist()
-
-
 print(f"Features categoriche: {categorical_features}")
 
 
-X_processed = X.copy()
+X_processed = X.copy()       #Copia del dataset
 
 
 label_encoders = {}
@@ -446,16 +443,18 @@ for feature in categorical_features:
     label_encoders[feature] = le
 
 
-y = df["Transportation cost"]  # Variabile dipendente da predire
+y = df["Transportation cost"]      # Variabile dipendente da predire
+
+
 
 
 # Suddividiamo il dataset in training (80%) e test (20%):
 
 X_train, X_test, y_train, y_test = train_test_split(
-          X, y, test_size=0.2, random_state=42
+          X_processed, y, test_size=0.2, random_state=42
 )
 
-# 4.4.1 Normalizzazione delle features con StandardScaler:
+
 
 
 
@@ -472,12 +471,6 @@ print("Modello addestrato con successo sui dati normalizzati!")
 
 
 
-
-
-
-
-
-# 4.6
 
 
 # Previsioni sui dati di test normalizzati
@@ -512,7 +505,149 @@ for feature, coef in zip(
 
 
 
+plt.subplot(1, 2, 1)                                                       # 1 riga, 2 colonne, primo grafico
+plt.scatter(y_test, y_pred, alpha=0.7, color="blue")                       # Disegna i punti
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], "r--", lw=2)      # Disegna la retta
+plt.xlabel("Prezzi Reali (€)")                   # Etichetta asse x
+plt.ylabel("Prezzi Predetti (€)")                # Etichetta asse y
+plt.title("Prezzo in funzione dei parametri")    # Titolo del grafico
+plt.grid(True, alpha=0.3)                        # Disegna la griglia
+
+
+plt.tight_layout()                              # Ridimensiona automaticamente i grafici
+plt.show()              # Visualizza i grafici
 
 
 
 
+
+
+
+
+#PASSO 5: OPENAI PER INSIGHT GENERATIVI
+
+#Obiettivo del codice:
+
+#Calcolare la media di una categoria di viaggio (es.Transportation cost) con l'uso di OpenAI
+
+
+import openai
+import json                         # Importa il modulo json per lavorare con dati in formato JSON
+import requests                     # Importa il modulo requests per effettuare richieste HTTP
+from openai import OpenAI           # Importa la classe OpenAI dal pacchetto openai
+from dotenv import (load_dotenv)    # Importa la funzione load_dotenv per caricare variabili d'ambiente da un file .env
+import os                           # Importa il modulo os per interagire con il sistema operativo
+
+df = pd.read_csv(r"C:\Users\nnngh\Desktop\Corso Data Analyst\DataAnalyst-course\FILE DATASET\Travel details dataset PROGETTINO.csv",
+                        encoding="utf-8", skip_blank_lines=True)
+
+# Carica le variabili d'ambiente definite nel file .env
+load_dotenv()
+
+
+# Recupera la chiave API di OpenAI dalla variabile d'ambiente
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+
+# Crea un'istanza del client OpenAI usando la chiave API
+client = OpenAI(api_key=OPENAI_API_KEY)
+ 
+
+
+def analyze_data(df, analysis_type, column=None):   
+        if analysis_type == "mean":
+            return f"Media di {column}: {df[column].mean():.2f}"
+        return "Speicificare la colonna per il calcolo della media"
+
+
+
+
+tools = [{
+
+        "type": "function",
+        "function": {
+            "name": "analyze_data_mean",
+            "description": "Analizza i dati con una colonna specifica (per mean)",  # Descrizione
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "analysis_type": {                      # analysis_type: tipo di analisi
+                        "type": "string",
+                        "enum": ["mean"],
+                        "description": "Tipo di analisi da eseguire",
+                    },
+                    "column": {                                         # column: colonna
+                        "type": "string",
+                        "description": "Nome della colonna da analizzare",
+                    },
+                   
+                },
+                "required": ["analysis_type", "column"],     # required: obbligatorio
+                "additionalProperties": False,                           # additionalProperties: proprieta'aggiuntive
+            },
+            "strict": True,                                              # strict: verificare
+        },
+    },
+]
+
+
+
+
+def function_calling(tool_calls):                                      # Funzione per gestire le chiamate agli strumenti
+    results = []                                                       # Inizializza la lista dei risultati
+
+    for tool_call in tool_calls:                                       # Itera su tutte le chiamate agli strumenti
+
+
+        if tool_call.function.name == "analyze_data_mean":                   # Se il nome della funzione é 'analyze_data'             
+            args = json.loads(tool_call.function.arguments)                      # Decodifica gli argomenti JSON
+            result = analyze_data(df, args.get("analysis_type"), args.get("column"))            # Ottiene il risultato dell'analisi
+
+            results.append(result)                                      # Aggiunge il risultato alla lista
+  
+                                                                        #ARGS.GET: Ottiene il valore associato alla chiave specificata
+
+    return "\n\n".join(results)  # Restituisce i risultati concatenati
+
+
+
+
+messages = []
+messages.append(
+        {
+            "role": "system",
+            "content": "Sei un assistente esperto in data analysis e visualizzazione dei dati. Puoi analizzare dataset, creare grafici e rispondere a domande sui dati. Usa gli strumenti disponibili per eseguire le operazioni richieste.",
+        }
+    )
+while True:
+
+        Query = input("Inserisci la tua richiesta (o 'exit' per uscire): ")
+        if Query.lower() == "exit":
+            print("Uscita dal programma.")
+            break
+
+        messages.append(
+            {
+                "role": "user",
+                "content": Query,
+            }
+        )
+
+        response = client.chat.completions.create(
+            model="gpt-4.1",
+            messages=messages[:6],
+            tools=tools,  # type: ignore
+            tool_choice="auto",
+        )
+        print("\nRisposta del modello:")
+        if response.choices[0].message.tool_calls:
+            print(function_calling(response.choices[0].message.tool_calls))
+            messages.append(
+                {
+                    "role": "assistant",
+                    "content": function_calling(response.choices[0].message.tool_calls),
+                }
+            )
+        else:
+            print(response.choices[0].message.content)
+            messages.append(response.choices[0].message)
